@@ -1,13 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useApp } from "./Providers";
-import { ui, t } from "@/lib/i18n";
+import { ui, t, langNames } from "@/lib/i18n";
+import type { Lang } from "@/lib/data";
 
 export default function Nav() {
-  const { lang, toggleLang, theme, toggleTheme, mounted } = useApp();
+  const { lang, setLang, theme, toggleTheme, mounted } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node))
+        setLangOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, []);
+
+  const langOrder: Lang[] = ["ko", "en", "vi"];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -55,14 +69,37 @@ export default function Nav() {
             ))}
           </ul>
 
-          {/* 언어 / 테마 토글 */}
-          <button
-            onClick={toggleLang}
-            aria-label="언어 전환 / Switch language"
-            className="ml-1 rounded-full border border-gray-200 px-3 py-1.5 text-xs font-bold text-gray-600 transition hover:bg-white dark:border-white/15 dark:text-gray-200 dark:hover:bg-white/10"
-          >
-            {lang === "ko" ? "EN" : "한국어"}
-          </button>
+          {/* 언어 선택 드롭다운 */}
+          <div className="relative ml-1" ref={langRef}>
+            <button
+              onClick={() => setLangOpen((v) => !v)}
+              aria-label="언어 선택 / Select language"
+              className="flex items-center gap-1 rounded-full border border-gray-200 px-3 py-1.5 text-xs font-bold text-gray-600 transition hover:bg-white dark:border-white/15 dark:text-gray-200 dark:hover:bg-white/10"
+            >
+              🌐 {langNames[lang]}
+              <span className="text-[8px]">▼</span>
+            </button>
+            {langOpen && (
+              <div className="absolute right-0 mt-2 w-32 overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-gray-100 dark:bg-[#1a1f2b] dark:ring-white/10">
+                {langOrder.map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => {
+                      setLang(l);
+                      setLangOpen(false);
+                    }}
+                    className={`block w-full px-4 py-2.5 text-left text-sm transition hover:bg-gray-50 dark:hover:bg-white/10 ${
+                      l === lang
+                        ? "font-bold text-rose-500"
+                        : "text-gray-600 dark:text-gray-300"
+                    }`}
+                  >
+                    {langNames[l]}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <button
             onClick={toggleTheme}
             aria-label="다크 모드 전환 / Toggle dark mode"

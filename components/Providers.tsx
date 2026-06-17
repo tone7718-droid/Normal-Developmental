@@ -35,7 +35,8 @@ export function Providers({ children }: { children: ReactNode }) {
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    if (savedLang === "ko" || savedLang === "en") setLangState(savedLang);
+    if (savedLang === "ko" || savedLang === "en" || savedLang === "vi")
+      setLangState(savedLang);
     const initialTheme: Theme =
       savedTheme === "dark" || savedTheme === "light"
         ? savedTheme
@@ -61,8 +62,10 @@ export function Providers({ children }: { children: ReactNode }) {
     localStorage.setItem("lang", lang);
   }, [lang, mounted]);
 
+  const order: Lang[] = ["ko", "en", "vi"];
   const setLang = (l: Lang) => setLangState(l);
-  const toggleLang = () => setLangState((p) => (p === "ko" ? "en" : "ko"));
+  const toggleLang = () =>
+    setLangState((p) => order[(order.indexOf(p) + 1) % order.length]);
   const toggleTheme = () => setTheme((p) => (p === "light" ? "dark" : "light"));
 
   return (

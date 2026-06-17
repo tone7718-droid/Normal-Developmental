@@ -15,7 +15,7 @@ export default function Checkups() {
       <div className="mx-auto max-w-4xl px-5">
         <div className="text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 text-sm font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200">
-            🩺 {lang === "ko" ? "국가 무료 검진" : "Free national check-ups"}
+            🩺 {t(ui.checkup.badge, lang)}
           </span>
           <h2 className="mt-4 text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
             {t(ui.checkup.title, lang)}

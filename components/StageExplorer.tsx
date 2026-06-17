@@ -1,22 +1,73 @@
 "use client";
 
-import { useState } from "react";
-import { stages, stageThemes, reflexById } from "@/lib/data";
+import { useEffect, useState } from "react";
+import { stages, stageThemes, reflexById, pick } from "@/lib/data";
+import { useApp } from "./Providers";
+import { ui, t } from "@/lib/i18n";
+
+const STORAGE_KEY = "dev-checklist";
 
 export default function StageExplorer() {
+  const { lang } = useApp();
   const [activeId, setActiveId] = useState(stages[0].id);
+  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [loaded, setLoaded] = useState(false);
+
+  // 체크리스트 복원
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) setChecked(JSON.parse(saved));
+    } catch {}
+    setLoaded(true);
+  }, []);
+
+  // 체크리스트 저장
+  useEffect(() => {
+    if (!loaded) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(checked));
+    } catch {}
+  }, [checked, loaded]);
+
+  // 나이 계산기 등에서 보낸 시기 선택 이벤트 수신
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const id = (e as CustomEvent).detail as string;
+      if (stages.some((s) => s.id === id)) setActiveId(id);
+    };
+    window.addEventListener("selectstage", handler);
+    return () => window.removeEventListener("selectstage", handler);
+  }, []);
+
   const active = stages.find((s) => s.id === activeId)!;
   const theme = stageThemes[active.theme];
 
+  const gross = pick(active.grossMotor, lang);
+  const fine = pick(active.fineMotor, lang);
+  const allKeys = [
+    ...gross.map((_, i) => `${active.id}:g:${i}`),
+    ...fine.map((_, i) => `${active.id}:f:${i}`),
+  ];
+  const doneCount = allKeys.filter((k) => checked[k]).length;
+  const progress = allKeys.length
+    ? Math.round((doneCount / allKeys.length) * 100)
+    : 0;
+
+  const toggle = (key: string) =>
+    setChecked((prev) => ({ ...prev, [key]: !prev[key] }));
+
   return (
-    <section id="timeline" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-16 sm:py-24">
+    <section
+      id="timeline"
+      className="mx-auto max-w-6xl scroll-mt-20 px-5 py-16 sm:py-24"
+    >
       <div className="text-center">
-        <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-          개월별 운동 발달
+        <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+          {t(ui.stages.title, lang)}
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-gray-600">
-          궁금한 시기를 눌러보세요. 그 시기 아기가 보이는 대근육·소근육 발달과
-          활발한 반사, 부모를 위한 팁을 한눈에 정리했어요.
+        <p className="mx-auto mt-4 max-w-2xl text-gray-600 dark:text-gray-300">
+          {t(ui.stages.desc, lang)}
         </p>
       </div>
 
@@ -24,7 +75,7 @@ export default function StageExplorer() {
       <div className="mt-10">
         <div className="flex gap-2 overflow-x-auto pb-3 sm:flex-wrap sm:justify-center">
           {stages.map((s) => {
-            const t = stageThemes[s.theme];
+            const tt = stageThemes[s.theme];
             const isActive = s.id === activeId;
             return (
               <button
@@ -32,12 +83,12 @@ export default function StageExplorer() {
                 onClick={() => setActiveId(s.id)}
                 className={`flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
                   isActive
-                    ? `${t.bg} text-white shadow-md`
-                    : "bg-white text-gray-600 ring-1 ring-gray-200 hover:bg-gray-50"
+                    ? `${tt.bg} text-white shadow-md`
+                    : "bg-white text-gray-600 ring-1 ring-gray-200 hover:bg-gray-50 dark:bg-white/5 dark:text-gray-300 dark:ring-white/10 dark:hover:bg-white/10"
                 }`}
               >
                 <span className="text-base">{s.emoji}</span>
-                {s.ageRange}
+                {pick(s.ageRange, lang)}
               </button>
             );
           })}
@@ -46,43 +97,72 @@ export default function StageExplorer() {
 
       {/* 상세 패널 */}
       <div
-        key={active.id}
-        className="mt-8 animate-fade-up overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-gray-100"
+        key={active.id + lang}
+        className="mt-8 animate-fade-up overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-gray-100 dark:bg-[#141821] dark:ring-white/10"
       >
         {/* 헤더 */}
         <div className={`${theme.soft} px-6 py-7 sm:px-10`}>
-          <div className="flex items-center gap-4">
-            <div
-              className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl ${theme.bg} text-3xl shadow-lg`}
-            >
-              {active.emoji}
-            </div>
-            <div>
-              <div className={`text-sm font-bold ${theme.text}`}>
-                {active.shortAge}
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div
+                className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl ${theme.bg} text-3xl shadow-lg`}
+              >
+                {active.emoji}
               </div>
-              <h3 className="text-2xl font-extrabold text-gray-900">
-                {active.ageRange}
-              </h3>
+              <div>
+                <div className={`text-sm font-bold ${theme.text}`}>
+                  {pick(active.shortAge, lang)}
+                </div>
+                <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white">
+                  {pick(active.ageRange, lang)}
+                </h3>
+              </div>
+            </div>
+            {/* 진행률 링 */}
+            <div className="hidden shrink-0 text-right sm:block">
+              <div className={`text-2xl font-extrabold ${theme.text}`}>
+                {progress}%
+              </div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">
+                {doneCount}/{allKeys.length}
+              </div>
             </div>
           </div>
-          <p className="mt-4 text-gray-700">{active.summary}</p>
+          <p className="mt-4 text-gray-700 dark:text-gray-200">
+            {pick(active.summary, lang)}
+          </p>
+          {/* 진행률 바 */}
+          <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-white/60 dark:bg-black/20">
+            <div
+              className={`h-full rounded-full ${theme.bg} transition-all duration-500`}
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+            ✅ {t(ui.stages.checklistDesc, lang)}
+          </p>
         </div>
 
-        {/* 본문 */}
-        <div className="grid gap-px bg-gray-100 sm:grid-cols-2">
-          <DetailBlock
-            title="대근육 운동"
-            subtitle="몸 전체를 쓰는 큰 움직임"
+        {/* 본문 — 체크리스트 */}
+        <div className="grid gap-px bg-gray-100 dark:bg-white/10 sm:grid-cols-2">
+          <CheckBlock
+            title={t(ui.stages.grossTitle, lang)}
+            subtitle={t(ui.stages.grossSub, lang)}
             icon="💪"
-            items={active.grossMotor}
+            items={gross}
+            keyPrefix={`${active.id}:g`}
+            checked={checked}
+            toggle={toggle}
             dotClass={theme.dot}
           />
-          <DetailBlock
-            title="소근육 운동"
-            subtitle="손과 손가락의 정교한 움직임"
+          <CheckBlock
+            title={t(ui.stages.fineTitle, lang)}
+            subtitle={t(ui.stages.fineSub, lang)}
             icon="🖐️"
-            items={active.fineMotor}
+            items={fine}
+            keyPrefix={`${active.id}:f`}
+            checked={checked}
+            toggle={toggle}
             dotClass={theme.dot}
           />
         </div>
@@ -91,8 +171,8 @@ export default function StageExplorer() {
         <div className="space-y-6 px-6 py-7 sm:px-10">
           {active.reflexes.length > 0 && (
             <div>
-              <h4 className="text-sm font-bold text-gray-500">
-                이 시기에 활발한 반사
+              <h4 className="text-sm font-bold text-gray-500 dark:text-gray-400">
+                {t(ui.stages.reflexLabel, lang)}
               </h4>
               <div className="mt-3 flex flex-wrap gap-2">
                 {active.reflexes.map((rid) => {
@@ -105,7 +185,7 @@ export default function StageExplorer() {
                       className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition hover:scale-105 ${theme.chip}`}
                     >
                       <span>{r.emoji}</span>
-                      {r.name}
+                      {pick(r.name, lang)}
                     </a>
                   );
                 })}
@@ -118,27 +198,27 @@ export default function StageExplorer() {
               <span className="text-xl">💡</span>
               <div>
                 <h4 className={`text-sm font-bold ${theme.text}`}>
-                  부모님을 위한 팁
+                  {t(ui.stages.tipLabel, lang)}
                 </h4>
-                <p className="mt-1 text-sm leading-relaxed text-gray-700">
-                  {active.parentTip}
+                <p className="mt-1 text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                  {pick(active.parentTip, lang)}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-orange-100 bg-orange-50/60 p-5">
+          <div className="rounded-2xl border border-orange-100 bg-orange-50/60 p-5 dark:border-orange-500/20 dark:bg-orange-950/20">
             <div className="flex items-start gap-3">
               <span className="text-xl">🩺</span>
               <div>
-                <h4 className="text-sm font-bold text-orange-700">
-                  이럴 땐 전문가와 상담해 보세요
+                <h4 className="text-sm font-bold text-orange-700 dark:text-orange-300">
+                  {t(ui.stages.watchLabel, lang)}
                 </h4>
                 <ul className="mt-2 space-y-1.5">
-                  {active.watchOut.map((w, i) => (
+                  {pick(active.watchOut, lang).map((w, i) => (
                     <li
                       key={i}
-                      className="flex items-start gap-2 text-sm text-gray-700"
+                      className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300"
                     >
                       <span className="mt-1 text-orange-400">•</span>
                       <span>{w}</span>
@@ -154,37 +234,66 @@ export default function StageExplorer() {
   );
 }
 
-function DetailBlock({
+function CheckBlock({
   title,
   subtitle,
   icon,
   items,
+  keyPrefix,
+  checked,
+  toggle,
   dotClass,
 }: {
   title: string;
   subtitle: string;
   icon: string;
   items: string[];
+  keyPrefix: string;
+  checked: Record<string, boolean>;
+  toggle: (key: string) => void;
   dotClass: string;
 }) {
   return (
-    <div className="bg-white px-6 py-7 sm:px-10">
+    <div className="bg-white px-6 py-7 dark:bg-[#141821] sm:px-10">
       <div className="flex items-center gap-2">
         <span className="text-lg">{icon}</span>
         <div>
-          <h4 className="font-bold text-gray-900">{title}</h4>
-          <p className="text-xs text-gray-400">{subtitle}</p>
+          <h4 className="font-bold text-gray-900 dark:text-white">{title}</h4>
+          <p className="text-xs text-gray-400 dark:text-gray-500">{subtitle}</p>
         </div>
       </div>
-      <ul className="mt-4 space-y-3">
-        {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
-            <span
-              className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${dotClass}`}
-            />
-            <span className="leading-relaxed">{item}</span>
-          </li>
-        ))}
+      <ul className="mt-4 space-y-1">
+        {items.map((item, i) => {
+          const key = `${keyPrefix}:${i}`;
+          const isOn = !!checked[key];
+          return (
+            <li key={i}>
+              <button
+                onClick={() => toggle(key)}
+                className="flex w-full items-start gap-3 rounded-xl px-2 py-2 text-left transition hover:bg-gray-50 dark:hover:bg-white/5"
+              >
+                <span
+                  className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition ${
+                    isOn
+                      ? `${dotClass} border-transparent text-white`
+                      : "border-gray-300 text-transparent dark:border-gray-600"
+                  }`}
+                >
+                  ✓
+                </span>
+                <span
+                  className={`text-sm leading-relaxed transition ${
+                    isOn
+                      ? "text-gray-400 line-through dark:text-gray-500"
+                      : "text-gray-700 dark:text-gray-200"
+                  }`}
+                >
+                  {item}
+                </span>
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

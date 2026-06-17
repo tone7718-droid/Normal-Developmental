@@ -28,6 +28,7 @@ export interface Stage {
   fineMotor: LList;
   reflexes: string[];
   parentTip: LText;
+  activities: LList;
   watchOut: LList;
 }
 
@@ -160,6 +161,23 @@ export const stages: Stage[] = [
       en: "Start a few minutes of supervised 'tummy time' each day while awake. It's the first step to building neck and shoulder strength.",
       vi: "Hãy bắt đầu cho bé 'nằm sấp' vài phút mỗi ngày khi bé thức và có người trông. Đây là bước đầu giúp bé khỏe cổ và vai.",
     },
+    activities: {
+      ko: [
+        "흑백 대비가 뚜렷한 그림이나 모빌을 20~30cm 거리에서 보여주세요.",
+        "깨어 있을 때 하루 몇 번 짧게 터미타임을 해주세요.",
+        "노래를 불러주며 천천히 안고 흔들어 주세요.",
+      ],
+      en: [
+        "Show high-contrast black-and-white pictures or a mobile 20–30 cm away.",
+        "Do short tummy-time sessions a few times a day while awake.",
+        "Sing and gently rock baby in your arms.",
+      ],
+      vi: [
+        "Cho bé xem tranh tương phản đen trắng hoặc đồ treo nôi ở khoảng cách 20–30 cm.",
+        "Cho bé nằm sấp ngắn vài lần mỗi ngày khi bé thức.",
+        "Hát và nhẹ nhàng đung đưa bé trên tay.",
+      ],
+    },
     watchOut: {
       ko: [
         "큰 소리에 전혀 놀라지 않아요.",
@@ -216,6 +234,23 @@ export const stages: Stage[] = [
       ko: "아기 눈높이에서 천천히 얼굴을 움직이며 눈맞춤을 해주세요. 시각 추적과 목 근육 발달에 좋아요.",
       en: "Make eye contact and slowly move your face at the baby's eye level. Great for visual tracking and neck muscles.",
       vi: "Hãy giao tiếp bằng mắt và di chuyển khuôn mặt chậm rãi ngang tầm mắt bé. Rất tốt cho khả năng dõi mắt và cơ cổ.",
+    },
+    activities: {
+      ko: [
+        "눈을 맞추고 마주 보며 다양한 표정을 지어 주세요.",
+        "딸랑이를 천천히 좌우로 움직여 눈으로 따라가게 해주세요.",
+        "엎드린 자세에서 아기 앞에 얼굴을 두어 고개 들기를 유도하세요.",
+      ],
+      en: [
+        "Make eye contact and show different facial expressions.",
+        "Move a rattle slowly side to side for the eyes to follow.",
+        "Lie in front of baby during tummy time to encourage head-lifting.",
+      ],
+      vi: [
+        "Giao tiếp bằng mắt và làm nhiều biểu cảm khuôn mặt.",
+        "Di chuyển lục lạc chậm sang trái phải để mắt bé dõi theo.",
+        "Khi bé nằm sấp, để mặt bạn phía trước để khuyến khích bé ngẩng đầu.",
+      ],
     },
     watchOut: {
       ko: ["엎드려도 고개를 전혀 들지 못해요.", "사람과 눈을 맞추거나 웃지 않아요."],
@@ -276,6 +311,23 @@ export const stages: Stage[] = [
       ko: "딸랑이를 손이 닿을 듯한 거리에 두어 손 뻗기를 유도해 보세요. 눈과 손의 협응이 자라납니다.",
       en: "Hold a rattle just within reach to encourage reaching. This grows hand-eye coordination.",
       vi: "Hãy để cái lục lạc ở khoảng cách vừa tầm với để khuyến khích bé với tay. Điều này phát triển khả năng phối hợp tay-mắt.",
+    },
+    activities: {
+      ko: [
+        "손이 닿을 듯한 거리에 장난감을 두어 손을 뻗게 해주세요.",
+        "다양한 질감의 안전한 장난감을 손에 쥐여 주세요.",
+        "거울을 보여주며 자기 모습에 관심을 갖게 해주세요.",
+      ],
+      en: [
+        "Place toys within reach to encourage reaching.",
+        "Put safe toys of different textures in baby's hands.",
+        "Show a mirror to spark interest in their reflection.",
+      ],
+      vi: [
+        "Đặt đồ chơi vừa tầm với để bé với tay.",
+        "Đặt vào tay bé đồ chơi an toàn với nhiều chất liệu.",
+        "Cho bé soi gương để bé thích thú với hình ảnh của mình.",
+      ],
     },
     watchOut: {
       ko: ["받쳐 안아도 머리를 가누지 못해요.", "양손을 모으거나 물건을 향해 손을 뻗지 않아요."],
@@ -339,6 +391,23 @@ export const stages: Stage[] = [
       ko: "안전한 바닥에서 자유롭게 구르고 뒤집게 해주세요. 다양한 질감의 장난감 탐색도 좋아요.",
       en: "Let baby roll freely on a safe floor. Exploring toys of different textures is great too.",
       vi: "Hãy để bé lăn và lật tự do trên sàn an toàn. Cho bé khám phá đồ chơi với nhiều chất liệu khác nhau cũng rất tốt.",
+    },
+    activities: {
+      ko: [
+        "양옆에 장난감을 두어 뒤집기를 유도해 주세요.",
+        "받쳐 앉힌 자세에서 함께 그림책을 보세요.",
+        "까꿍 놀이로 사라짐과 나타남을 즐기게 해주세요.",
+      ],
+      en: [
+        "Place toys to the sides to encourage rolling.",
+        "Look at picture books together in a supported sitting position.",
+        "Play peekaboo to enjoy things appearing and disappearing.",
+      ],
+      vi: [
+        "Đặt đồ chơi hai bên để khuyến khích bé lật.",
+        "Cùng xem sách tranh khi bé ngồi có người đỡ.",
+        "Chơi ú òa để bé thích thú với việc biến mất và xuất hiện.",
+      ],
     },
     watchOut: {
       ko: [
@@ -406,6 +475,23 @@ export const stages: Stage[] = [
       en: "Place a toy just ahead to encourage crawling. Pad sharp furniture corners in advance.",
       vi: "Hãy đặt đồ chơi phía trước để khuyến khích bé bò. Hãy bọc trước các góc cạnh sắc của đồ đạc.",
     },
+    activities: {
+      ko: [
+        "조금 앞에 장난감을 두어 기어가도록 유도하세요.",
+        "컵에 블록을 넣고 빼는 놀이를 함께 하세요.",
+        "북이나 안전한 물건을 두드리며 소리를 즐기게 해주세요.",
+      ],
+      en: [
+        "Put a toy just ahead to encourage crawling.",
+        "Play putting blocks in and out of a cup.",
+        "Bang a drum or safe object together to enjoy the sounds.",
+      ],
+      vi: [
+        "Đặt đồ chơi phía trước một chút để khuyến khích bé bò.",
+        "Chơi bỏ khối vào và lấy ra khỏi cốc.",
+        "Cùng gõ trống hoặc vật an toàn để bé thích thú với âm thanh.",
+      ],
+    },
     watchOut: {
       ko: [
         "받쳐줘도 혼자 앉지 못해요.",
@@ -471,6 +557,23 @@ export const stages: Stage[] = [
       ko: "붙잡고 설 수 있는 안정적인 가구를 배치해 주세요. 바닥의 작은 물건은 삼킴 위험이 있으니 치워주세요.",
       en: "Arrange sturdy furniture to pull up on. Remove small floor objects — they're a choking hazard.",
       vi: "Hãy sắp xếp đồ đạc chắc chắn để bé bám đứng. Dọn các vật nhỏ trên sàn vì có nguy cơ hóc nghẹn.",
+    },
+    activities: {
+      ko: [
+        "붙잡고 설 수 있는 안정적인 가구를 배치해 주세요.",
+        "공을 굴려 주고받는 놀이를 해보세요.",
+        "작게 자른 부드러운 간식으로 손가락 집기를 연습하게 해주세요.",
+      ],
+      en: [
+        "Arrange sturdy furniture to pull up on.",
+        "Roll a ball back and forth together.",
+        "Offer small, soft finger foods to practice the pincer grasp.",
+      ],
+      vi: [
+        "Sắp xếp đồ đạc chắc chắn để bé bám đứng.",
+        "Lăn bóng qua lại với bé.",
+        "Cho bé thức ăn bốc mềm, cắt nhỏ để tập kẹp ngón.",
+      ],
     },
     watchOut: {
       ko: [
@@ -538,6 +641,23 @@ export const stages: Stage[] = [
       en: "Walking barefoot on a safe floor helps balance. Walking anytime from 9–16 months is within the normal range.",
       vi: "Cho bé đi chân trần trên sàn an toàn giúp giữ thăng bằng. Biết đi trong khoảng 9–16 tháng đều nằm trong mức bình thường.",
     },
+    activities: {
+      ko: [
+        "손을 잡고 함께 걸어 보세요.",
+        "밀고 다니는 장난감으로 걷기를 도와주세요.",
+        "블록을 쌓고 무너뜨리는 놀이를 함께 하세요.",
+      ],
+      en: [
+        "Walk together holding hands.",
+        "Help walking with a push-along toy.",
+        "Stack and knock down blocks together.",
+      ],
+      vi: [
+        "Dắt tay bé cùng đi.",
+        "Giúp bé tập đi bằng đồ chơi đẩy.",
+        "Cùng xếp và làm đổ các khối.",
+      ],
+    },
     watchOut: {
       ko: ["잡아줘도 다리로 서지 못해요.", "이전에 하던 동작(앉기·기기)을 갑자기 못 하게 돼요."],
       en: [
@@ -589,6 +709,23 @@ export const stages: Stage[] = [
       en: "Let them walk lots in a wide, fall-safe space. Always supervise stairs closely.",
       vi: "Hãy cho bé đi nhiều ở không gian rộng, an toàn khi ngã. Luôn trông chừng sát sao khi bé ở cầu thang.",
     },
+    activities: {
+      ko: [
+        "넓고 안전한 곳에서 마음껏 걷게 해주세요.",
+        "끌거나 미는 장난감으로 걷기를 즐기게 해주세요.",
+        "크레용으로 자유롭게 끄적이게 해주세요.",
+      ],
+      en: [
+        "Let them walk freely in a wide, safe space.",
+        "Use pull or push toys to make walking fun.",
+        "Let them scribble freely with crayons.",
+      ],
+      vi: [
+        "Cho bé đi thoải mái ở nơi rộng và an toàn.",
+        "Dùng đồ chơi kéo đẩy để bé thích đi.",
+        "Cho bé tự do vẽ nguệch ngoạc bằng bút sáp.",
+      ],
+    },
     watchOut: {
       ko: ["18개월이 되어도 혼자 걷지 못해요.", "발끝(까치발)으로만 걸어요."],
       en: ["Still can't walk alone by 18 months.", "Walks only on the toes (tiptoe)."],
@@ -633,6 +770,23 @@ export const stages: Stage[] = [
       ko: "공놀이, 미끄럼틀 등 대근육을 쓰는 바깥 놀이를 늘려주세요. 균형과 협응이 함께 자라납니다.",
       en: "Add outdoor play that uses big muscles — ball games, slides. Balance and coordination grow together.",
       vi: "Hãy tăng các hoạt động ngoài trời dùng cơ lớn như chơi bóng, cầu trượt. Thăng bằng và phối hợp sẽ cùng phát triển.",
+    },
+    activities: {
+      ko: [
+        "공을 차고 던지는 바깥 놀이를 해주세요.",
+        "미끄럼틀, 계단 오르내리기 등 균형 놀이를 함께 하세요.",
+        "큰 블록을 여러 개 쌓는 놀이를 해보세요.",
+      ],
+      en: [
+        "Play outside kicking and throwing a ball.",
+        "Do balance play like slides and stairs together.",
+        "Stack several large blocks together.",
+      ],
+      vi: [
+        "Chơi ngoài trời với đá và ném bóng.",
+        "Cùng chơi giữ thăng bằng như cầu trượt, lên xuống cầu thang.",
+        "Cùng xếp chồng nhiều khối lớn.",
+      ],
     },
     watchOut: {
       ko: ["달리지 못하거나 자주 넘어져요.", "두 돌이 지나도 계단을 전혀 오르지 못해요."],

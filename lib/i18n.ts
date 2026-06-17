@@ -5,8 +5,10 @@ export const ui = {
   nav: {
     intro: { ko: "소개", en: "Overview", vi: "Giới thiệu" },
     timeline: { ko: "개월별 발달", en: "By month", vi: "Theo tháng" },
+    tummy: { ko: "터미타임", en: "Tummy time", vi: "Nằm sấp" },
     reflexes: { ko: "원시 반사", en: "Reflexes", vi: "Phản xạ" },
     checkup: { ko: "건강검진", en: "Check-ups", vi: "Khám sức khỏe" },
+    warnings: { ko: "위험 신호", en: "Warning signs", vi: "Dấu hiệu cảnh báo" },
     faq: { ko: "자주 묻는 질문", en: "FAQ", vi: "Hỏi đáp" },
     brand: { ko: "아기 발달 가이드", en: "Baby Development", vi: "Phát triển của bé" },
   },
@@ -151,6 +153,11 @@ export const ui = {
       vi: "Phản xạ hoạt động ở giai đoạn này",
     },
     tipLabel: { ko: "부모님을 위한 팁", en: "Tip for parents", vi: "Mẹo cho cha mẹ" },
+    activitiesLabel: {
+      ko: "이렇게 놀아주세요",
+      en: "Play ideas",
+      vi: "Gợi ý chơi với bé",
+    },
     watchLabel: {
       ko: "이럴 땐 전문가와 상담해 보세요",
       en: "Talk to a professional if…",
@@ -220,6 +227,76 @@ export const ui = {
       ko: "검진 시기·항목은 정책에 따라 달라질 수 있어요. 정확한 일정은 국민건강보험공단(1577-1000) 또는 검진기관에서 확인하세요.",
       en: "Timing and items may change with policy. Confirm exact schedules with your national health service or clinic.",
       vi: "Thời điểm và nội dung khám có thể thay đổi theo chính sách. Hãy xác nhận lịch chính xác với cơ quan y tế quốc gia hoặc phòng khám.",
+    },
+  },
+  tummyTime: {
+    badge: { ko: "🤸 토대가 되는 활동", en: "🤸 Foundational skill", vi: "🤸 Kỹ năng nền tảng" },
+    title: { ko: "터미타임 미니 가이드", en: "Tummy time mini-guide", vi: "Hướng dẫn nhanh nằm sấp" },
+    desc: {
+      ko: "터미타임(엎드려 놀기)은 거의 모든 운동 발달의 출발점이에요. 어렵지 않아요 — 아래만 기억하면 됩니다.",
+      en: "Tummy time is the starting point for almost all motor development. It's simple — just remember the points below.",
+      vi: "Nằm sấp là điểm khởi đầu cho hầu hết sự phát triển vận động. Rất đơn giản — chỉ cần nhớ những điều dưới đây.",
+    },
+    points: [
+      {
+        emoji: "🕐",
+        title: { ko: "언제·얼마나", en: "When & how much", vi: "Khi nào & bao lâu" },
+        text: {
+          ko: "신생아는 하루 2~3회, 한 번에 1~2분부터 시작하세요. 점차 늘려 3~4개월에는 하루 총 20~30분을 목표로 해요.",
+          en: "Newborns: start 2–3 times a day, 1–2 minutes each. Build up to a total of 20–30 minutes a day by 3–4 months.",
+          vi: "Trẻ sơ sinh: bắt đầu 2–3 lần/ngày, mỗi lần 1–2 phút. Tăng dần đến tổng 20–30 phút/ngày khi 3–4 tháng.",
+        },
+      },
+      {
+        emoji: "🛟",
+        title: { ko: "안전하게", en: "Safely", vi: "An toàn" },
+        text: {
+          ko: "항상 깨어 있고 보호자가 지켜볼 때만 하세요. 평평하고 단단한 바닥에서, 수유 직후는 피합니다.",
+          en: "Only when awake and supervised. On a flat, firm surface, and avoid right after feeding.",
+          vi: "Chỉ khi bé thức và có người trông. Trên mặt phẳng cứng, và tránh ngay sau khi bú.",
+        },
+      },
+      {
+        emoji: "😊",
+        title: { ko: "싫어할 때 요령", en: "If baby dislikes it", vi: "Khi bé không thích" },
+        text: {
+          ko: "짧게 자주 하고, 내 가슴 위에 엎드리기부터 시작하세요. 눈높이에서 얼굴이나 장난감으로 흥미를 끌어 주세요.",
+          en: "Keep it short and frequent; start on your chest. Engage at eye level with your face or a toy.",
+          vi: "Cho ngắn và thường xuyên; bắt đầu trên ngực bạn. Thu hút bé ngang tầm mắt bằng mặt bạn hoặc đồ chơi.",
+        },
+      },
+      {
+        emoji: "💪",
+        title: { ko: "왜 중요해요", en: "Why it matters", vi: "Vì sao quan trọng" },
+        text: {
+          ko: "목·어깨·등 근육을 키워 고개 들기, 뒤집기, 앉기의 바탕이 돼요. 머리 한쪽이 납작해지는 것도 예방합니다.",
+          en: "Builds neck, shoulder, and back muscles — the basis for head control, rolling, and sitting. Also helps prevent a flat spot on the head.",
+          vi: "Phát triển cơ cổ, vai, lưng — nền tảng cho giữ đầu, lật và ngồi. Cũng giúp ngừa bẹp một bên đầu.",
+        },
+      },
+    ],
+    note: {
+      ko: "잠은 반드시 등을 대고 똑바로 눕혀 재우세요. 터미타임은 깨어 있고 지켜볼 때만 합니다.",
+      en: "Always put baby to sleep on the back. Tummy time is only for awake, supervised play.",
+      vi: "Khi ngủ luôn đặt bé nằm ngửa. Nằm sấp chỉ dành cho lúc bé thức và có người trông.",
+    },
+  },
+  warnings: {
+    badge: { ko: "🩺 빠른 점검", en: "🩺 Quick check", vi: "🩺 Kiểm tra nhanh" },
+    title: {
+      ko: "한눈에 보는 발달 위험 신호",
+      en: "Developmental warning signs at a glance",
+      vi: "Dấu hiệu cảnh báo phát triển trong nháy mắt",
+    },
+    desc: {
+      ko: "아래는 시기별로 '전문가와 상담'을 권하는 신호를 모은 거예요. 한두 가지에 해당한다고 꼭 문제가 있는 것은 아니지만, 여러 개가 보이거나 걱정된다면 소아청소년과에 상담하세요.",
+      en: "Below gathers the 'talk to a professional' signs for each age. Matching one or two doesn't necessarily mean a problem, but if several appear or you're worried, consult a pediatrician.",
+      vi: "Dưới đây tổng hợp các dấu hiệu 'nên hỏi chuyên gia' theo từng độ tuổi. Trùng một hai dấu hiệu không hẳn là có vấn đề, nhưng nếu thấy nhiều hoặc bạn lo lắng, hãy tư vấn bác sĩ nhi khoa.",
+    },
+    emphasis: {
+      ko: "어느 시기든, 이전에 하던 동작(앉기·기기·걷기 등)을 갑자기 못 하게 되면 시기와 관계없이 바로 진료받으세요.",
+      en: "At any age, if your baby suddenly loses a skill they had (sitting, crawling, walking…), seek care right away.",
+      vi: "Ở bất kỳ độ tuổi nào, nếu bé đột nhiên mất kỹ năng đã có (ngồi, bò, đi…), hãy đi khám ngay.",
     },
   },
   faq: {

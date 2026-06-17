@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { stages, stageThemes, reflexById, pick } from "@/lib/data";
 import { useApp } from "./Providers";
 import { ui, t } from "@/lib/i18n";
+import BabyIllustration from "./BabyIllustration";
 
 const STORAGE_KEY = "dev-checklist";
 
@@ -104,10 +105,11 @@ export default function StageExplorer() {
         <div className={`${theme.soft} px-6 py-7 sm:px-10`}>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <div
-                className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl ${theme.bg} text-3xl shadow-lg`}
-              >
-                {active.emoji}
+              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-white shadow-lg dark:bg-white/10">
+                <BabyIllustration
+                  stageId={active.id}
+                  className={`h-16 w-16 ${theme.text}`}
+                />
               </div>
               <div>
                 <div className={`text-sm font-bold ${theme.text}`}>
@@ -203,6 +205,30 @@ export default function StageExplorer() {
                 <p className="mt-1 text-sm leading-relaxed text-gray-700 dark:text-gray-200">
                   {pick(active.parentTip, lang)}
                 </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-2xl bg-cream p-5 dark:bg-white/5">
+            <div className="flex items-start gap-3">
+              <span className="text-xl">🧸</span>
+              <div>
+                <h4 className="text-sm font-bold text-gray-700 dark:text-gray-200">
+                  {t(ui.stages.activitiesLabel, lang)}
+                </h4>
+                <ul className="mt-2 space-y-1.5">
+                  {pick(active.activities, lang).map((a, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300"
+                    >
+                      <span
+                        className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${theme.dot}`}
+                      />
+                      <span className="leading-relaxed">{a}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>

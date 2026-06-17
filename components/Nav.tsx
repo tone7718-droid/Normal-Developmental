@@ -32,9 +32,11 @@ export default function Nav() {
 
   const links = [
     { href: "#intro", label: t(ui.nav.intro, lang) },
+    { href: "#tummy", label: t(ui.nav.tummy, lang) },
     { href: "#timeline", label: t(ui.nav.timeline, lang) },
     { href: "#reflexes", label: t(ui.nav.reflexes, lang) },
     { href: "#checkup", label: t(ui.nav.checkup, lang) },
+    { href: "#warnings", label: t(ui.nav.warnings, lang) },
     { href: "#faq", label: t(ui.nav.faq, lang) },
   ];
 
@@ -56,7 +58,7 @@ export default function Nav() {
         </a>
 
         <div className="flex items-center gap-1">
-          <ul className="hidden items-center gap-1 md:flex">
+          <ul className="hidden items-center gap-0.5 lg:flex">
             {links.map((l) => (
               <li key={l.href}>
                 <a
@@ -111,7 +113,7 @@ export default function Nav() {
           <button
             aria-label="메뉴 열기"
             onClick={() => setOpen((v) => !v)}
-            className="rounded-lg p-2 text-gray-700 dark:text-gray-200 md:hidden"
+            className="rounded-lg p-2 text-gray-700 dark:text-gray-200 lg:hidden"
           >
             <div className="space-y-1.5">
               <span className="block h-0.5 w-6 bg-current" />
@@ -123,7 +125,7 @@ export default function Nav() {
       </nav>
 
       {open && (
-        <ul className="space-y-1 border-t border-gray-100 bg-cream px-5 py-3 dark:border-white/10 dark:bg-[#0f1117] md:hidden">
+        <ul className="space-y-1 border-t border-gray-100 bg-cream px-5 py-3 dark:border-white/10 dark:bg-[#0f1117] lg:hidden">
           {links.map((l) => (
             <li key={l.href}>
               <a

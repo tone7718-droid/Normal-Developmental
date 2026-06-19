@@ -9,6 +9,7 @@ export const ui = {
     reflexes: { ko: "원시 반사", en: "Reflexes", vi: "Phản xạ" },
     checkup: { ko: "건강검진", en: "Check-ups", vi: "Khám sức khỏe" },
     warnings: { ko: "위험 신호", en: "Warning signs", vi: "Dấu hiệu cảnh báo" },
+    myths: { ko: "오해와 진실", en: "Myths & facts", vi: "Hiểu đúng" },
     faq: { ko: "자주 묻는 질문", en: "FAQ", vi: "Hỏi đáp" },
     brand: { ko: "아기 발달 가이드", en: "Baby Development", vi: "Phát triển của bé" },
   },
@@ -281,6 +282,130 @@ export const ui = {
       vi: "Khi ngủ luôn đặt bé nằm ngửa. Nằm sấp chỉ dành cho lúc bé thức và có người trông.",
     },
   },
+  facilitation: {
+    badge: { ko: "🌱 발달 돕기", en: "🌱 Helping development", vi: "🌱 Hỗ trợ phát triển" },
+    title: {
+      ko: "발달을 돕는 4가지 원칙",
+      en: "4 principles to support development",
+      vi: "4 nguyên tắc hỗ trợ phát triển",
+    },
+    desc: {
+      ko: "근거 기반 소아 발달의 핵심은 '대신 해주기'가 아니라 '스스로 하도록 돕기'예요. 집에서 이 원칙만 기억하면 충분합니다.",
+      en: "The heart of evidence-based infant development is not doing it for the baby, but helping them do it themselves. At home, just remember these.",
+      vi: "Cốt lõi của phát triển dựa trên bằng chứng không phải là làm thay bé, mà là giúp bé tự làm. Ở nhà, chỉ cần nhớ những điều này.",
+    },
+    points: [
+      {
+        emoji: "🎯",
+        title: { ko: "딱 한 단계 위로", en: "Just one step ahead", vi: "Chỉ hơn một bước" },
+        text: {
+          ko: "지금 할 수 있는 것보다 살짝 더 어려운 과제를 주세요. 예를 들어 전완으로 받치고 있다면, 시선 높이의 약간 옆에 장난감을 두어 손뻗기와 체중 이동을 유도해요.",
+          en: "Offer a task just a bit harder than what baby can do now. If they prop on their forearms, place a toy slightly to the side at eye level to invite reaching and weight shift.",
+          vi: "Hãy đưa ra thử thách khó hơn một chút so với hiện tại. Nếu bé đang chống cẳng tay, đặt đồ chơi hơi lệch sang bên ngang tầm mắt để khuyến khích với tay và chuyển trọng lượng.",
+        },
+      },
+      {
+        emoji: "⚖️",
+        title: { ko: "적당한 난이도", en: "The right challenge", vi: "Độ khó vừa phải" },
+        text: {
+          ko: "너무 쉬우면 배울 게 없고, 너무 어려우면 포기해요. 성공과 도전 사이의 '적당한 난이도'에서 아기는 가장 잘 배웁니다.",
+          en: "Too easy and there's nothing to learn; too hard and baby gives up. Babies learn best at a 'just right' level between success and challenge.",
+          vi: "Quá dễ thì không có gì để học; quá khó thì bé bỏ cuộc. Bé học tốt nhất ở mức 'vừa phải' giữa thành công và thử thách.",
+        },
+      },
+      {
+        emoji: "🔄",
+        title: { ko: "다양한 자세 경험", en: "Try many positions", vi: "Nhiều tư thế khác nhau" },
+        text: {
+          ko: "엎드림·바로 눕기·옆으로 눕기·받쳐 앉기 등 여러 자세로 골고루 놀게 해주세요. 한 자세에만 오래 두지 않는 것이 좋아요.",
+          en: "Let baby play in many positions — tummy, back, side-lying, supported sitting. Avoid keeping them in one position for long.",
+          vi: "Hãy cho bé chơi ở nhiều tư thế — nằm sấp, nằm ngửa, nằm nghiêng, ngồi có đỡ. Tránh để bé ở một tư thế quá lâu.",
+        },
+      },
+      {
+        emoji: "✋",
+        title: { ko: "스스로 할 기회", en: "Let them do it", vi: "Để bé tự làm" },
+        text: {
+          ko: "움직임을 대신 만들어 주기보다, 아기가 스스로 움직이고 싶도록 동기와 기회를 주세요. 능동적으로 한 움직임이 진짜 학습이 됩니다.",
+          en: "Rather than making the movement for them, give baby the motivation and chance to move on their own. Active, self-initiated movement is what truly builds skills.",
+          vi: "Thay vì làm thay động tác cho bé, hãy cho bé động lực và cơ hội tự cử động. Cử động chủ động, tự khởi xướng mới thật sự hình thành kỹ năng.",
+        },
+      },
+    ],
+  },
+  mythBusting: {
+    badge: { ko: "💡 근거로 확인하기", en: "💡 Evidence check", vi: "💡 Kiểm chứng bằng bằng chứng" },
+    title: { ko: "흔한 오해와 진실", en: "Common myths & facts", vi: "Hiểu lầm thường gặp & sự thật" },
+    desc: {
+      ko: "육아 중 자주 듣는 이야기들을, 최신 근거 기반 소아 발달 관점에서 정리했어요.",
+      en: "Common parenting beliefs, sorted out from the perspective of up-to-date, evidence-based infant development.",
+      vi: "Những điều thường nghe khi nuôi con, được làm rõ từ góc nhìn phát triển trẻ dựa trên bằng chứng mới nhất.",
+    },
+    mythLabel: { ko: "오해", en: "Myth", vi: "Hiểu lầm" },
+    factLabel: { ko: "사실", en: "Fact", vi: "Sự thật" },
+    items: [
+      {
+        myth: {
+          ko: "반사를 자주 자극해 주면 근육이 더 잘 발달한다.",
+          en: "Triggering reflexes often helps muscles develop better.",
+          vi: "Kích thích phản xạ thường xuyên giúp cơ phát triển tốt hơn.",
+        },
+        fact: {
+          ko: "원시 반사를 일부러 자주 유발할 필요는 없어요. 정상 아기는 안기·엎드리기·놀이 같은 일상 활동만으로 충분한 움직임을 경험하고, 반사는 때가 되면 자연스럽게 통합됩니다.",
+          en: "There's no need to deliberately trigger primitive reflexes. A typical baby gets enough movement through everyday activities like being held, tummy time, and play, and reflexes integrate naturally in time.",
+          vi: "Không cần cố ý kích thích các phản xạ nguyên thủy. Bé bình thường đã vận động đủ qua các hoạt động hằng ngày như được bế, nằm sấp và chơi, và phản xạ sẽ tự tích hợp đúng lúc.",
+        },
+      },
+      {
+        myth: {
+          ko: "보행기를 태우면 걷기를 더 빨리 배운다.",
+          en: "Baby walkers help babies learn to walk sooner.",
+          vi: "Xe tập đi giúp bé biết đi sớm hơn.",
+        },
+        fact: {
+          ko: "보행기·점퍼·바운서에 오래 두는 것은 권장되지 않아요. 스스로 하는 체중 이동과 탐색을 오히려 제한하고, 보행기는 걷기를 앞당기지 못할뿐더러 지연시키거나 안전사고를 일으킬 수 있어요. 안전한 바닥 놀이가 더 좋습니다.",
+          en: "Long stretches in walkers, jumpers, or bouncers aren't recommended. They limit self-directed weight shifting and exploration; walkers don't speed up walking and can even delay it or cause injuries. Safe floor play is better.",
+          vi: "Không nên để bé lâu trong xe tập đi, ghế nhún hay ghế bập bênh. Chúng hạn chế việc tự chuyển trọng lượng và khám phá; xe tập đi không giúp đi sớm hơn mà còn có thể làm chậm lại hoặc gây tai nạn. Chơi trên sàn an toàn thì tốt hơn.",
+        },
+      },
+      {
+        myth: {
+          ko: "기지 않고 바로 걸으면 발달에 문제가 있는 것이다.",
+          en: "Skipping crawling means something is wrong.",
+          vi: "Bỏ qua giai đoạn bò nghĩa là có vấn đề.",
+        },
+        fact: {
+          ko: "일부 아기는 기기를 건너뛰고 바로 잡고 서기로 넘어가요. 최신 연구에서는 기기를 건너뛰는 것 자체가 반드시 발달 지연을 뜻하지는 않는다고 봅니다. 다른 이정표가 잘 진행된다면 대개 괜찮아요.",
+          en: "Some babies skip crawling and go straight to pulling up. Current research says skipping crawling by itself doesn't necessarily mean a delay. If other milestones are progressing, it's usually fine.",
+          vi: "Một số bé bỏ qua giai đoạn bò và chuyển thẳng sang bám đứng. Nghiên cứu hiện nay cho rằng bỏ qua bò tự nó không hẳn là chậm phát triển. Nếu các mốc khác vẫn tiến triển, thường là ổn.",
+        },
+      },
+      {
+        myth: {
+          ko: "발달을 도우려면 특별한 기구나 운동이 필요하다.",
+          en: "You need special equipment or exercises to help development.",
+          vi: "Cần thiết bị hoặc bài tập đặc biệt để hỗ trợ phát triển.",
+        },
+        fact: {
+          ko: "가장 간단하고 근거 있는 방법은 '엎드려 놀기(터미타임)'예요. 아기가 중력에 맞서 머리 들기, 전완 지지, 손뻗기를 스스로 연습하는 풍부한 환경을 주는 것이 핵심입니다.",
+          en: "The simplest, best-evidenced method is tummy time. The key is giving baby a rich environment to practice lifting the head, propping on the arms, and reaching against gravity — on their own.",
+          vi: "Cách đơn giản và có bằng chứng nhất là cho bé nằm sấp. Điều quan trọng là tạo môi trường phong phú để bé tự tập ngẩng đầu, chống tay và với tay chống lại trọng lực.",
+        },
+      },
+      {
+        myth: {
+          ko: "돌(12개월)이 됐는데 걷지 못하면 늦은 것이다.",
+          en: "If a baby isn't walking by 12 months, they're behind.",
+          vi: "Nếu 12 tháng bé chưa đi là bị chậm.",
+        },
+        fact: {
+          ko: "혼자 걷기의 정상 범위는 9~18개월로 매우 넓어요. 12개월에 못 걸어도 정상입니다. 다만 15개월까지 걷지 않으면 한 번 평가를, 18개월까지 걷지 않으면 전문의 상담을 권합니다.",
+          en: "The normal range for independent walking is wide — 9 to 18 months. Not walking at 12 months is normal. But if there's no walking by 15 months, consider an evaluation; by 18 months, see a specialist.",
+          vi: "Khoảng bình thường để tự đi rất rộng — 9 đến 18 tháng. Chưa đi lúc 12 tháng là bình thường. Nhưng nếu 15 tháng vẫn chưa đi, nên đánh giá; đến 18 tháng vẫn chưa đi, hãy gặp chuyên gia.",
+        },
+      },
+    ],
+  },
   warnings: {
     badge: { ko: "🩺 빠른 점검", en: "🩺 Quick check", vi: "🩺 Kiểm tra nhanh" },
     title: {
@@ -318,9 +443,9 @@ export const ui = {
           vi: "Bé nhà tôi có vẻ chậm hơn bạn cùng tuổi. Có sao không?",
         },
         a: {
-          ko: "아기마다 발달 속도는 다릅니다. 예를 들어 혼자 걷는 시기는 9개월부터 16개월까지도 모두 정상 범위예요. 한두 가지가 조금 늦더라도 전반적으로 꾸준히 나아가고 있다면 대개 괜찮습니다. 다만 여러 영역이 동시에 늦거나, 하던 동작을 갑자기 못 하게 되면 전문가 상담을 권합니다.",
-          en: "Every baby develops at their own pace. Walking, for instance, is normal anywhere from 9 to 16 months. If one or two things are a bit late but overall progress is steady, it's usually fine. But if several areas lag at once, or your baby loses a skill they had, see a professional.",
-          vi: "Mỗi bé phát triển theo nhịp riêng. Ví dụ, biết đi trong khoảng 9 đến 16 tháng đều là bình thường. Nếu một hai điều hơi chậm nhưng nhìn chung bé vẫn tiến bộ đều thì thường không sao. Tuy nhiên, nếu nhiều lĩnh vực chậm cùng lúc, hoặc bé mất đi kỹ năng đã có, hãy đi khám chuyên gia.",
+          ko: "아기마다 발달 속도는 다릅니다. 예를 들어 혼자 걷는 시기는 9개월부터 18개월까지도 모두 정상 범위예요. 한두 가지가 조금 늦더라도 전반적으로 꾸준히 나아가고 있다면 대개 괜찮습니다. 다만 여러 영역이 동시에 늦거나, 하던 동작을 갑자기 못 하게 되면 전문가 상담을 권합니다.",
+          en: "Every baby develops at their own pace. Walking, for instance, is normal anywhere from 9 to 18 months. If one or two things are a bit late but overall progress is steady, it's usually fine. But if several areas lag at once, or your baby loses a skill they had, see a professional.",
+          vi: "Mỗi bé phát triển theo nhịp riêng. Ví dụ, biết đi trong khoảng 9 đến 18 tháng đều là bình thường. Nếu một hai điều hơi chậm nhưng nhìn chung bé vẫn tiến bộ đều thì thường không sao. Tuy nhiên, nếu nhiều lĩnh vực chậm cùng lúc, hoặc bé mất đi kỹ năng đã có, hãy đi khám chuyên gia.",
         },
       },
       {
@@ -422,6 +547,10 @@ export const sources = [
   {
     label: "보건복지부·국민건강보험공단 영유아 건강검진",
     url: "https://www.nhis.or.kr",
+  },
+  {
+    label: "근거 기반 소아물리치료 문헌 (Hadders-Algra; Novak et al., Early Intervention)",
+    url: "https://pubmed.ncbi.nlm.nih.gov/29084268/",
   },
 ];
 

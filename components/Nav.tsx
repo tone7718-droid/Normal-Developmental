@@ -37,6 +37,7 @@ export default function Nav() {
     { href: "#reflexes", label: t(ui.nav.reflexes, lang) },
     { href: "#checkup", label: t(ui.nav.checkup, lang) },
     { href: "#warnings", label: t(ui.nav.warnings, lang) },
+    { href: "#myths", label: t(ui.nav.myths, lang) },
     { href: "#faq", label: t(ui.nav.faq, lang) },
   ];
 

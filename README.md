@@ -15,6 +15,8 @@
 - **위험 신호 요약** — 시기별 주의 신호를 한곳에 모아 빠르게 점검
 - **자주 묻는 질문** — 발달 속도, 이른둥이 교정 연령, 터미타임, 보행기, 까치발 등 부모들이 가장 궁금해하는 내용
 - **한국어 / 영어 / 베트남어(Tiếng Việt) 전환 · 다크 모드** — 우측 상단 언어 메뉴와 테마 토글로 바꿀 수 있고, 선택은 기기에 저장
+- **앱처럼 설치 + 오프라인 보기 (PWA)** — 스마트폰 홈 화면에 추가해 앱처럼 쓸 수 있고, 서비스 워커가 화면을 캐시해 인터넷이 불안정해도 다시 볼 수 있어요
+- **공유 친화적 메타데이터 (SEO)** — 카카오톡·SNS로 링크를 보내면 깔끔한 미리보기 카드(자동 생성 OG 이미지)가 뜨고, 검색엔진용 구조화 데이터(FAQ)·사이트맵·robots를 제공
 - **참고 자료** — WHO·CDC·미국소아과학회(AAP)·국민건강보험공단 출처 링크
 
 > 이 사이트는 부모의 이해를 돕는 **교육용 자료**이며, 의학적 진단·치료를 대신하지 않습니다.
@@ -50,23 +52,38 @@ npm start        # 빌드 결과 실행
 
 ```
 app/
-  layout.tsx          # 전역 레이아웃 · 메타데이터 · 폰트
+  layout.tsx          # 전역 레이아웃 · 메타데이터 · 구조화 데이터(JSON-LD) · 서비스워커
   page.tsx            # 메인 페이지 (섹션 조합)
   globals.css         # 전역 스타일
+  manifest.ts         # PWA 매니페스트
+  icon.svg            # 파비콘 · PWA 아이콘 (병아리 SVG)
+  apple-icon.tsx      # iOS 홈 화면 아이콘 (PNG 자동 생성)
+  opengraph-image.tsx # SNS 공유 썸네일 (PNG 자동 생성)
+  twitter-image.tsx   # 트위터 카드 이미지 (OG 재사용)
+  sitemap.ts          # 사이트맵
+  robots.ts           # robots.txt
 components/
-  Providers.tsx       # 언어(ko/en) · 다크모드 전역 상태
+  Providers.tsx       # 언어(ko/en/vi) · 다크모드 전역 상태
   Nav.tsx             # 상단 네비게이션 · 언어/테마 토글
+  ServiceWorker.tsx   # 서비스 워커 등록 (오프라인 지원)
   Hero.tsx            # 첫 화면
   Overview.tsx        # 발달의 방향 소개
+  TummyTime.tsx       # 터미타임 미니 가이드
+  FacilitationPrinciples.tsx # 발달 촉진 4원칙
   AgeCalculator.tsx   # 나이 계산기 (교정 연령 지원)
   StageExplorer.tsx   # 개월별 발달 탐색 + 체크리스트
   ReflexSection.tsx   # 원시 반사 카드 + 타임라인
   Checkups.tsx        # 영유아 건강검진 일정
+  WarningSummary.tsx  # 위험 신호 요약
+  MythBusting.tsx     # 근거 기반 오해 바로잡기
   Faq.tsx             # 자주 묻는 질문
   Footer.tsx          # 안내 문구 · 면책 · 참고 자료
 lib/
-  data.ts             # 발달 단계 · 반사 · 검진 데이터 (한/영)
-  i18n.ts             # UI 문자열 · 참고 자료 (한/영)
+  data.ts             # 발달 단계 · 반사 · 검진 데이터 (한/영/베)
+  i18n.ts             # UI 문자열 · FAQ · 참고 자료 (한/영/베)
+  site.ts             # 사이트 전역 메타 정보 (SEO · PWA 공통)
 ```
 
-콘텐츠를 수정하려면 **`lib/data.ts`**(발달·반사 데이터)와 **`lib/i18n.ts`**(UI 문구)를 고치면 됩니다. 각 텍스트는 `{ ko, en }` 형태라 두 언어를 함께 관리합니다.
+콘텐츠를 수정하려면 **`lib/data.ts`**(발달·반사 데이터)와 **`lib/i18n.ts`**(UI 문구)를 고치면 됩니다. 각 텍스트는 `{ ko, en, vi }` 형태라 세 언어를 함께 관리합니다.
+
+> 배포 도메인을 바꾸려면 환경 변수 `NEXT_PUBLIC_SITE_URL`을 설정하세요. 없으면 Vercel 프로덕션 도메인을 자동으로 사용합니다 (OG 이미지·사이트맵·canonical 링크의 절대 URL에 쓰입니다).

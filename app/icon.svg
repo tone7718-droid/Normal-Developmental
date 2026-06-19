@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="아기 발달 가이드">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff3e8"/>
+      <stop offset="1" stop-color="#ffe2ec"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe07a"/>
+      <stop offset="1" stop-color="#ffce47"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- 발 -->
+  <g stroke="#f2933a" stroke-width="11" stroke-linecap="round">
+    <path d="M223 392 v26 M223 418 l-16 16 M223 418 l16 16"/>
+    <path d="M289 392 v26 M289 418 l-16 16 M289 418 l16 16"/>
+  </g>
+  <!-- 몸통 -->
+  <circle cx="256" cy="300" r="118" fill="url(#body)"/>
+  <!-- 날개 -->
+  <path d="M168 300 q-30 24 -2 56 q22 -8 30 -34 z" fill="#ffc02e"/>
+  <!-- 머리 위 깃털 -->
+  <path d="M256 132 q-14 -26 4 -44 q10 22 -4 44 z" fill="#ffce47"/>
+  <!-- 머리 -->
+  <circle cx="256" cy="216" r="92" fill="url(#body)"/>
+  <!-- 볼 -->
+  <circle cx="206" cy="236" r="16" fill="#ffb3c6" opacity="0.7"/>
+  <circle cx="306" cy="236" r="16" fill="#ffb3c6" opacity="0.7"/>
+  <!-- 눈 -->
+  <circle cx="228" cy="206" r="13" fill="#3a2f2a"/>
+  <circle cx="284" cy="206" r="13" fill="#3a2f2a"/>
+  <circle cx="232" cy="202" r="4" fill="#fff"/>
+  <circle cx="288" cy="202" r="4" fill="#fff"/>
+  <!-- 부리 -->
+  <path d="M256 224 l-20 16 l20 12 l20 -12 z" fill="#f2933a"/>
+</svg>

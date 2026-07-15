@@ -11,11 +11,14 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (langRef.current && !langRef.current.contains(e.target as Node))
         setLangOpen(false);
+      if (headerRef.current && !headerRef.current.contains(e.target as Node))
+        setOpen(false);
     };
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -53,6 +56,7 @@ export default function Nav() {
 
   return (
     <header
+      ref={headerRef}
       className={`fixed inset-x-0 top-0 z-50 transition-all ${
         scrolled
           ? "bg-cream/90 shadow-sm backdrop-blur dark:bg-[#0f1117]/90 dark:shadow-black/40"

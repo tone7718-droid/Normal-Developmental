@@ -26,28 +26,41 @@ export default function Checkups() {
         </div>
 
         <div className="mt-10 overflow-hidden rounded-3xl ring-1 ring-gray-100 dark:ring-white/10">
-          {/* 헤더 행 */}
-          <div className="grid grid-cols-[auto_1fr_2fr] gap-3 bg-emerald-50 px-5 py-3 text-xs font-bold text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200 sm:px-7">
-            <div>{t(ui.checkup.periodLabel, lang)}</div>
-            <div>{t(ui.checkup.ageColLabel, lang)}</div>
-            <div>{t(ui.checkup.focusColLabel, lang)}</div>
-          </div>
-          {checkups.map((c, i) => (
-            <div
-              key={i}
-              className="grid grid-cols-[auto_1fr_2fr] items-center gap-3 border-t border-gray-100 bg-white px-5 py-4 dark:border-white/10 dark:bg-[#141821] sm:px-7"
-            >
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500 text-sm font-bold text-white">
-                {pick(c.period, lang)}
-              </div>
-              <div className="text-sm font-semibold text-gray-900 dark:text-white">
-                {pick(c.ageLabel, lang)}
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">
-                {pick(c.focus, lang)}
-              </div>
-            </div>
-          ))}
+          <table className="w-full border-collapse text-left">
+            <thead>
+              <tr className="bg-emerald-50 text-xs text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200">
+                <th scope="col" className="px-5 py-3 font-bold sm:px-7">
+                  {t(ui.checkup.periodLabel, lang)}
+                </th>
+                <th scope="col" className="py-3 pr-3 font-bold">
+                  {t(ui.checkup.ageColLabel, lang)}
+                </th>
+                <th scope="col" className="py-3 pr-5 font-bold sm:pr-7">
+                  {t(ui.checkup.focusColLabel, lang)}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {checkups.map((c, i) => (
+                <tr
+                  key={i}
+                  className="border-t border-gray-100 bg-white dark:border-white/10 dark:bg-[#141821]"
+                >
+                  <td className="px-5 py-4 sm:px-7">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500 text-sm font-bold text-white">
+                      {pick(c.period, lang)}
+                    </span>
+                  </td>
+                  <td className="py-4 pr-3 text-sm font-semibold text-gray-900 dark:text-white">
+                    {pick(c.ageLabel, lang)}
+                  </td>
+                  <td className="py-4 pr-5 text-sm text-gray-600 dark:text-gray-300 sm:pr-7">
+                    {pick(c.focus, lang)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
         <p className="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">

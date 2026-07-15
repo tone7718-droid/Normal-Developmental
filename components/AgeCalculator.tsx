@@ -13,6 +13,20 @@ function monthsBetween(start: Date, end: Date): number {
   return months;
 }
 
+function parseLocalDate(value: string): Date | null {
+  const [year, month, day] = value.split("-").map(Number);
+  if (!year || !month || !day) return null;
+  const date = new Date(year, month - 1, day);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function formatDateInputValue(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 function matchStage(months: number): string | null {
   for (const [id, [lo, hi]] of Object.entries(stageMonthRange)) {
     if (months >= lo && months <= hi) return id;
@@ -29,9 +43,9 @@ export default function AgeCalculator() {
   const result = useMemo(() => {
     const baseStr = corrected && dueDate ? dueDate : birth;
     if (!baseStr) return null;
-    const base = new Date(baseStr);
+    const base = parseLocalDate(baseStr);
     const now = new Date();
-    if (isNaN(base.getTime())) return null;
+    if (!base) return null;
     const months = monthsBetween(base, now);
     if (months < 0) return { status: "future" as const };
     if (months > 24) return { status: "over" as const, months };
@@ -57,13 +71,14 @@ export default function AgeCalculator() {
 
           <div className="mt-6 space-y-4">
             <div>
-              <label className="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-200">
+              <label htmlFor="baby-birth-date" className="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-200">
                 {t(ui.calculator.birthLabel, lang)}
               </label>
               <input
+                id="baby-birth-date"
                 type="date"
                 value={birth}
-                max={new Date().toISOString().split("T")[0]}
+                max={formatDateInputValue(new Date())}
                 onChange={(e) => setBirth(e.target.value)}
                 className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-800 outline-none ring-rose-200 transition focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
               />
@@ -81,10 +96,11 @@ export default function AgeCalculator() {
 
             {corrected && (
               <div className="animate-fade-up">
-                <label className="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-200">
+                <label htmlFor="baby-due-date" className="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-200">
                   {t(ui.calculator.dueDateLabel, lang)}
                 </label>
                 <input
+                  id="baby-due-date"
                   type="date"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
@@ -96,7 +112,7 @@ export default function AgeCalculator() {
 
           {/* 결과 */}
           {result && (
-            <div className="mt-6 animate-fade-up rounded-2xl bg-white p-5 text-center shadow-sm ring-1 ring-gray-100 dark:bg-white/5 dark:ring-white/10">
+            <div aria-live="polite" className="mt-6 animate-fade-up rounded-2xl bg-white p-5 text-center shadow-sm ring-1 ring-gray-100 dark:bg-white/5 dark:ring-white/10">
               {result.status === "future" && (
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                   {t(ui.calculator.future, lang)}

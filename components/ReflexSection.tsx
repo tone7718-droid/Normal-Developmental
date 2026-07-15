@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { reflexes, stageThemes, pick } from "@/lib/data";
+import { useState } from "react";
+import { reflexes, pick } from "@/lib/data";
 import { useApp } from "./Providers";
 import { ui, t } from "@/lib/i18n";
 
@@ -18,6 +19,7 @@ const barColors = [
 
 export default function ReflexSection() {
   const { lang } = useApp();
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   return (
     <section
@@ -39,6 +41,18 @@ export default function ReflexSection() {
             </strong>
             {t(ui.reflexSection.descEnd, lang)}
           </p>
+          <div className="mx-auto mt-5 max-w-3xl rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-left text-sm leading-relaxed text-amber-900 dark:border-amber-500/20 dark:bg-amber-950/30 dark:text-amber-100">
+            <strong>{t(ui.reflexSection.safetyTitle, lang)}</strong>{" "}
+            {t(ui.reflexSection.safetyText, lang)}{" "}
+            <a
+              href="https://www.healthychildren.org/English/ages-stages/baby/Pages/newborn-reflexes.aspx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold underline underline-offset-2"
+            >
+              {t(ui.reflexSection.safetySource, lang)} ↗
+            </a>
+          </div>
         </div>
 
         {/* 반사 타임라인 (간트차트) */}
@@ -97,20 +111,29 @@ export default function ReflexSection() {
 
         {/* 반사 카드 */}
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {reflexes.map((r) => (
-            <article
-              key={r.id}
-              className="group flex flex-col rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-lg dark:bg-[#141821] dark:ring-white/10"
-            >
+          {reflexes.map((r) => {
+            const isExpanded = !!expanded[r.id];
+            const detailId = `reflex-detail-${r.id}`;
+            return (
+              <article
+                key={r.id}
+                className="group flex flex-col rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-lg dark:bg-[#141821] dark:ring-white/10"
+              >
               <div className="mb-5 overflow-hidden rounded-2xl bg-rose-50 dark:bg-rose-950/30">
                 <Image
-                  src={`/illustrations/reflexes/reflex-${r.id}.png`}
+                  src={`/illustrations/reflexes/reflex-${r.id}.webp`}
                   alt={pick(r.whatHappens, lang)}
-                  width={512}
-                  height={512}
+                  width={1024}
+                  height={683}
                   sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw"
-                  className="aspect-square w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+                  className="aspect-[3/2] w-full object-cover transition duration-500 group-hover:scale-[1.02]"
                 />
+                <div className="grid grid-cols-2 border-t border-rose-100 bg-white/80 text-center text-[11px] font-semibold text-gray-500 dark:border-white/10 dark:bg-black/20 dark:text-gray-300">
+                  <span className="py-1.5">{t(ui.reflexSection.beforeLabel, lang)}</span>
+                  <span className="border-l border-rose-100 py-1.5 dark:border-white/10">
+                    {t(ui.reflexSection.responseLabel, lang)}
+                  </span>
+                </div>
               </div>
 
               <div className="flex items-center gap-3">
@@ -141,7 +164,28 @@ export default function ReflexSection() {
                 {pick(r.whatHappens, lang)}
               </p>
 
-              <div className="mt-4 space-y-3 border-t border-gray-100 pt-4 dark:border-white/10">
+              <button
+                type="button"
+                aria-expanded={isExpanded}
+                aria-controls={detailId}
+                onClick={() =>
+                  setExpanded((current) => ({
+                    ...current,
+                    [r.id]: !current[r.id],
+                  }))
+                }
+                className="mt-4 flex w-full items-center justify-between rounded-xl bg-gray-50 px-3 py-2 text-sm font-semibold text-gray-700 dark:bg-white/5 dark:text-gray-200 sm:hidden"
+              >
+                {isExpanded
+                  ? t(ui.reflexSection.hideDetails, lang)
+                  : t(ui.reflexSection.showDetails, lang)}
+                <span aria-hidden="true">{isExpanded ? "−" : "+"}</span>
+              </button>
+
+              <div
+                id={detailId}
+                className={`${isExpanded ? "block" : "hidden"} mt-4 space-y-3 border-t border-gray-100 pt-4 dark:border-white/10 sm:block`}
+              >
                 <div>
                   <p className="text-xs font-bold text-gray-500 dark:text-gray-400">
                     {t(ui.reflexSection.howLabel, lang)}
@@ -159,8 +203,9 @@ export default function ReflexSection() {
                   </p>
                 </div>
               </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

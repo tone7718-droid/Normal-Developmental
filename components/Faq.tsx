@@ -30,6 +30,8 @@ export default function Faq() {
               >
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${i}`}
                   className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
                 >
                   <span className="font-semibold text-gray-900 dark:text-white">
@@ -44,13 +46,10 @@ export default function Faq() {
                   </span>
                 </button>
                 <div
-                  className={`grid transition-all duration-300 ${
-                    isOpen
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
-                  }`}
+                  id={`faq-answer-${i}`}
+                  hidden={!isOpen}
                 >
-                  <div className="overflow-hidden">
+                  <div>
                     <p className="px-5 pb-5 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                       {t(f.a, lang)}
                     </p>

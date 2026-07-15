@@ -74,7 +74,14 @@ export default function StageExplorer() {
 
       {/* 연령 선택 타임라인 */}
       <div className="mt-10">
-        <div className="flex gap-2 overflow-x-auto pb-3 sm:flex-wrap sm:justify-center">
+        <p className="mb-2 text-center text-xs text-gray-400 sm:hidden">
+          {t(ui.stages.swipeHint, lang)}
+        </p>
+        <div
+          role="group"
+          aria-label={t(ui.stages.periodLabel, lang)}
+          className="flex gap-2 overflow-x-auto pb-3 sm:flex-wrap sm:justify-center"
+        >
           {stages.map((s) => {
             const tt = stageThemes[s.theme];
             const isActive = s.id === activeId;
@@ -82,6 +89,7 @@ export default function StageExplorer() {
               <button
                 key={s.id}
                 onClick={() => setActiveId(s.id)}
+                aria-pressed={isActive}
                 className={`flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
                   isActive
                     ? `${tt.bg} text-white shadow-md`
@@ -122,10 +130,10 @@ export default function StageExplorer() {
                 {/* 진행률 링 */}
                 <div className="hidden shrink-0 text-right sm:block">
                   <div className={`text-2xl font-extrabold ${theme.text}`}>
-                    {progress}%
+                    {doneCount}/{allKeys.length}
                   </div>
                   <div className="text-xs text-gray-500 dark:text-gray-400">
-                    {doneCount}/{allKeys.length}
+                    {t(ui.stages.observedCount, lang)}
                   </div>
                 </div>
               </div>
@@ -135,19 +143,27 @@ export default function StageExplorer() {
               {/* 진행률 바 */}
               <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-white/60 dark:bg-black/20">
                 <div
+                  role="progressbar"
+                  aria-label={t(ui.stages.observedCount, lang)}
+                  aria-valuemin={0}
+                  aria-valuemax={allKeys.length}
+                  aria-valuenow={doneCount}
                   className={`h-full rounded-full ${theme.bg} transition-all duration-500`}
                   style={{ width: `${progress}%` }}
                 />
               </div>
               <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                ✅ {t(ui.stages.checklistDesc, lang)}
+                {t(ui.stages.checklistDesc, lang)}
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
+                {t(ui.stages.checklistNote, lang)}
               </p>
             </div>
 
             <div className="mx-auto w-full max-w-[280px]">
               <div className="overflow-hidden rounded-3xl bg-white/70 p-2 shadow-lg ring-1 ring-white/80 dark:bg-white/10 dark:ring-white/10">
                 <Image
-                  src={`/illustrations/stages/stage-${active.id}.png`}
+                  src={`/illustrations/stages/stage-${active.id}.webp`}
                   alt={pick(active.summary, lang)}
                   width={512}
                   height={512}
@@ -310,6 +326,8 @@ function CheckBlock({
             <li key={i}>
               <button
                 onClick={() => toggle(key)}
+                role="checkbox"
+                aria-checked={isOn}
                 className="flex w-full items-start gap-3 rounded-xl px-2 py-2 text-left transition hover:bg-gray-50 dark:hover:bg-white/5"
               >
                 <span

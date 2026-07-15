@@ -23,7 +23,7 @@ export default function Hero() {
           {t(ui.hero.badge, lang)}
         </span>
 
-        <h1 className="mt-6 animate-fade-up text-4xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+        <h1 className="mt-6 animate-fade-up text-[2rem] font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white sm:text-5xl">
           {t(ui.hero.title1, lang)}
           <br />
           <span className="bg-gradient-to-r from-rose-500 via-amber-500 to-sky-500 bg-clip-text text-transparent">
@@ -50,7 +50,7 @@ export default function Hero() {
           </a>
         </div>
 
-        <p className="mt-8 animate-fade-up text-xs text-gray-400 dark:text-gray-500">
+        <p className="mt-8 animate-fade-up text-xs text-gray-500 dark:text-gray-400">
           {t(ui.hero.note, lang)}
         </p>
       </div>

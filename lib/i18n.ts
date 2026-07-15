@@ -99,9 +99,9 @@ export const ui = {
       vi: "Bé của bạn được mấy tháng?",
     },
     desc: {
-      ko: "생년월일을 입력하면 현재 개월 수와 해당 발달 시기를 찾아드려요. 입력 정보는 기기에만 저장되고 서버로 전송되지 않습니다.",
-      en: "Enter the birth date to find the current age in months and the matching stage. Your input stays on your device and is never sent to a server.",
-      vi: "Nhập ngày sinh để biết số tháng tuổi hiện tại và giai đoạn phát triển tương ứng. Thông tin chỉ lưu trên thiết bị của bạn, không gửi lên máy chủ.",
+      ko: "생년월일을 입력하면 현재 개월 수와 해당 발달 시기를 찾아드려요. 날짜는 브라우저에서만 계산하며 서버로 전송하지 않습니다.",
+      en: "Enter the birth date to find the current age in months and the matching stage. The date is calculated only in your browser and is not sent to a server.",
+      vi: "Nhập ngày sinh để biết số tháng tuổi hiện tại và giai đoạn phát triển tương ứng. Ngày chỉ được tính trong trình duyệt và không gửi lên máy chủ.",
     },
     birthLabel: { ko: "아기 생년월일", en: "Baby's birth date", vi: "Ngày sinh của bé" },
     correctedToggle: {
@@ -166,10 +166,18 @@ export const ui = {
     },
     checklistTitle: { ko: "우리 아기 발달 체크", en: "Track your baby", vi: "Theo dõi bé" },
     checklistDesc: {
-      ko: "할 수 있는 항목을 체크해 보세요. 진행 상황은 이 기기에 저장돼요.",
-      en: "Check what your baby can do. Progress is saved on this device.",
-      vi: "Hãy đánh dấu những điều bé làm được. Tiến độ được lưu trên thiết bị này.",
+      ko: "관찰한 움직임을 체크해 보세요. 확인 기록은 이 브라우저에 저장돼요.",
+      en: "Check movements you have observed. Your record is saved in this browser.",
+      vi: "Đánh dấu các cử động bạn đã quan sát. Bản ghi được lưu trong trình duyệt này.",
     },
+    checklistNote: {
+      ko: "이 목록은 점수나 선별·진단 도구가 아닙니다. 아기는 각자 다른 속도로 발달하며, 걱정되는 점은 영유아 건강검진이나 소아청소년과에서 상담하세요.",
+      en: "This list is not a score, screening test, or diagnostic tool. Babies develop at different rates; discuss concerns at a well-baby visit or with a pediatrician.",
+      vi: "Danh sách này không phải là điểm số, công cụ sàng lọc hay chẩn đoán. Mỗi bé phát triển với tốc độ khác nhau; hãy trao đổi lo lắng khi khám định kỳ hoặc với bác sĩ nhi khoa.",
+    },
+    observedCount: { ko: "확인한 움직임", en: "Observed movements", vi: "Cử động đã quan sát" },
+    periodLabel: { ko: "발달 시기 선택", en: "Choose a developmental period", vi: "Chọn giai đoạn phát triển" },
+    swipeHint: { ko: "좌우로 밀어 다른 시기를 볼 수 있어요", en: "Swipe sideways to see more periods", vi: "Vuốt ngang để xem thêm giai đoạn" },
   },
   reflexSection: {
     badge: { ko: "✨ 타고난 능력", en: "✨ Inborn abilities", vi: "✨ Khả năng bẩm sinh" },
@@ -185,9 +193,9 @@ export const ui = {
       vi: "Xuất hiện và mất đi đúng thời điểm",
     },
     descEnd: {
-      ko: "가 건강한 발달의 신호예요.",
-      en: " is a sign of healthy development.",
-      vi: " là dấu hiệu của sự phát triển khỏe mạnh.",
+      ko: "는 발달 점검에서 참고하는 정보예요. 시기는 아기마다 조금씩 다를 수 있습니다.",
+      en: " is useful context in developmental assessment, though timing can vary between babies.",
+      vi: " là thông tin tham khảo khi đánh giá phát triển, nhưng thời điểm có thể khác nhau giữa các bé.",
     },
     appearLabel: { ko: "나타남", en: "Appears", vi: "Xuất hiện" },
     disappearLabel: { ko: "사라짐", en: "Fades", vi: "Mất đi" },
@@ -204,6 +212,17 @@ export const ui = {
       vi: "Mỗi thanh cho thấy phản xạ hoạt động trong bao lâu. Hầu hết mất đi trong vài tháng đầu.",
     },
     monthAxis: { ko: "개월", en: "mo", vi: "th" },
+    beforeLabel: { ko: "자극 전", en: "Before", vi: "Trước" },
+    responseLabel: { ko: "보이는 반응", en: "Response", vi: "Phản ứng" },
+    showDetails: { ko: "자세히 보기", en: "Show details", vi: "Xem chi tiết" },
+    hideDetails: { ko: "간단히 보기", en: "Hide details", vi: "Thu gọn" },
+    safetyTitle: { ko: "안전 안내:", en: "Safety note:", vi: "Lưu ý an toàn:" },
+    safetyText: {
+      ko: "설명은 반사의 모습을 이해하기 위한 것으로, 집에서 반사를 일부러 또는 반복해서 유발하라는 뜻이 아닙니다. 반사 평가는 의료진의 진찰로 확인하세요.",
+      en: "These descriptions help you recognize reflexes; they are not instructions to deliberately or repeatedly trigger them at home. Reflex assessment belongs in a clinician's examination.",
+      vi: "Các mô tả giúp nhận biết phản xạ, không phải hướng dẫn cố ý hay lặp lại việc kích thích tại nhà. Việc đánh giá phản xạ nên do nhân viên y tế thực hiện.",
+    },
+    safetySource: { ko: "미국소아과학회 자료", en: "AAP parent resource", vi: "Tài liệu AAP cho cha mẹ" },
   },
   checkup: {
     badge: {
@@ -243,9 +262,9 @@ export const ui = {
         emoji: "🕐",
         title: { ko: "언제·얼마나", en: "When & how much", vi: "Khi nào & bao lâu" },
         text: {
-          ko: "신생아는 하루 2~3회, 한 번에 1~2분부터 시작하세요. 점차 늘려 3~4개월에는 하루 총 20~30분을 목표로 해요.",
-          en: "Newborns: start 2–3 times a day, 1–2 minutes each. Build up to a total of 20–30 minutes a day by 3–4 months.",
-          vi: "Trẻ sơ sinh: bắt đầu 2–3 lần/ngày, mỗi lần 1–2 phút. Tăng dần đến tổng 20–30 phút/ngày khi 3–4 tháng.",
+          ko: "퇴원 후부터 하루 2~3회, 한 번에 3~5분으로 시작하세요. 아기가 7주 무렵이 되면 하루 총 15~30분까지 천천히 늘려요.",
+          en: "From the day you come home, start 2–3 times a day for 3–5 minutes each. Gradually work toward a total of 15–30 minutes a day by about 7 weeks.",
+          vi: "Từ khi về nhà, bắt đầu 2–3 lần/ngày, mỗi lần 3–5 phút. Tăng dần đến tổng 15–30 phút/ngày khi bé khoảng 7 tuần.",
         },
       },
       {
@@ -281,6 +300,7 @@ export const ui = {
       en: "Always put baby to sleep on the back. Tummy time is only for awake, supervised play.",
       vi: "Khi ngủ luôn đặt bé nằm ngửa. Nằm sấp chỉ dành cho lúc bé thức và có người trông.",
     },
+    source: { ko: "미국소아과학회 터미타임 안내", en: "AAP tummy time guidance", vi: "Hướng dẫn nằm sấp của AAP" },
   },
   facilitation: {
     badge: { ko: "🌱 발달 돕기", en: "🌱 Helping development", vi: "🌱 Hỗ trợ phát triển" },
@@ -528,6 +548,11 @@ export const ui = {
       vi: "Tài liệu tham khảo phác họa diễn tiến trung bình. Mỗi bé lớn lên theo nhịp riêng của mình. 🌱",
     },
     sourcesTitle: { ko: "참고 자료", en: "References", vi: "Tài liệu tham khảo" },
+    sourcesReviewed: {
+      ko: "자료 링크 및 핵심 문구 확인: 2026년 7월 15일",
+      en: "Links and key guidance reviewed: July 15, 2026",
+      vi: "Đã kiểm tra liên kết và hướng dẫn chính: 15/7/2026",
+    },
   },
 };
 
@@ -538,19 +563,23 @@ export const sources = [
   },
   {
     label: "CDC – Developmental Milestones (Learn the Signs. Act Early.)",
-    url: "https://www.cdc.gov/ncbddd/actearly/milestones/index.html",
+    url: "https://www.cdc.gov/act-early/milestones/key-points.html",
   },
   {
-    label: "American Academy of Pediatrics – HealthyChildren.org",
-    url: "https://www.healthychildren.org/English/ages-stages/Pages/default.aspx",
+    label: "American Academy of Pediatrics – Tummy Time",
+    url: "https://www.healthychildren.org/English/ages-stages/baby/sleep/Pages/Back-to-Sleep-Tummy-to-Play.aspx",
+  },
+  {
+    label: "American Academy of Pediatrics – Newborn Reflexes",
+    url: "https://www.healthychildren.org/English/ages-stages/baby/Pages/newborn-reflexes.aspx",
+  },
+  {
+    label: "MedlinePlus – Infant Reflexes",
+    url: "https://medlineplus.gov/ency/article/003292.htm",
   },
   {
     label: "보건복지부·국민건강보험공단 영유아 건강검진",
-    url: "https://www.nhis.or.kr",
-  },
-  {
-    label: "근거 기반 소아물리치료 문헌 (Hadders-Algra; Novak et al., Early Intervention)",
-    url: "https://pubmed.ncbi.nlm.nih.gov/29084268/",
+    url: "https://www.nhis.or.kr/lm/lmxsrv/main/moviePopup.do?seqMovie=74",
   },
 ];
 

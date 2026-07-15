@@ -37,6 +37,9 @@ export default function Footer() {
               </li>
             ))}
           </ul>
+          <p className="mt-4 text-xs text-gray-400 dark:text-gray-500">
+            {t(ui.footer.sourcesReviewed, lang)}
+          </p>
         </div>
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">

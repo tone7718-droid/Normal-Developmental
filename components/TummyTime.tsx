@@ -51,6 +51,16 @@ export default function TummyTime() {
             {t(ui.tummyTime.note, lang)}
           </p>
         </div>
+        <p className="mt-3 text-right text-xs text-gray-500 dark:text-gray-400">
+          <a
+            href="https://www.healthychildren.org/English/ages-stages/baby/sleep/Pages/Back-to-Sleep-Tummy-to-Play.aspx"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold underline underline-offset-2"
+          >
+            {t(ui.tummyTime.source, lang)} ↗
+          </a>
+        </p>
       </div>
     </section>
   );

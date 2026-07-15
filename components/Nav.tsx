@@ -17,8 +17,18 @@ export default function Nav() {
       if (langRef.current && !langRef.current.contains(e.target as Node))
         setLangOpen(false);
     };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        setLangOpen(false);
+      }
+    };
     document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKeyDown);
+    };
   }, []);
 
   const langOrder: Lang[] = ["ko", "en", "vi"];
@@ -77,13 +87,18 @@ export default function Nav() {
             <button
               onClick={() => setLangOpen((v) => !v)}
               aria-label="언어 선택 / Select language"
+              aria-expanded={langOpen}
+              aria-controls="language-menu"
               className="flex items-center gap-1 rounded-full border border-gray-200 px-3 py-1.5 text-xs font-bold text-gray-600 transition hover:bg-white dark:border-white/15 dark:text-gray-200 dark:hover:bg-white/10"
             >
               🌐 {langNames[lang]}
               <span className="text-[8px]">▼</span>
             </button>
             {langOpen && (
-              <div className="absolute right-0 mt-2 w-32 overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-gray-100 dark:bg-[#1a1f2b] dark:ring-white/10">
+              <div
+                id="language-menu"
+                className="absolute right-0 mt-2 w-32 overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-gray-100 dark:bg-[#1a1f2b] dark:ring-white/10"
+              >
                 {langOrder.map((l) => (
                   <button
                     key={l}
@@ -112,7 +127,9 @@ export default function Nav() {
           </button>
 
           <button
-            aria-label="메뉴 열기"
+            aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
             onClick={() => setOpen((v) => !v)}
             className="rounded-lg p-2 text-gray-700 dark:text-gray-200 lg:hidden"
           >
@@ -126,7 +143,10 @@ export default function Nav() {
       </nav>
 
       {open && (
-        <ul className="space-y-1 border-t border-gray-100 bg-cream px-5 py-3 dark:border-white/10 dark:bg-[#0f1117] lg:hidden">
+        <ul
+          id="mobile-navigation"
+          className="space-y-1 border-t border-gray-100 bg-cream px-5 py-3 dark:border-white/10 dark:bg-[#0f1117] lg:hidden"
+        >
           {links.map((l) => (
             <li key={l.href}>
               <a

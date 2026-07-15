@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { reflexes, stageThemes, pick } from "@/lib/data";
 import { useApp } from "./Providers";
 import { ui, t } from "@/lib/i18n";
@@ -101,6 +102,17 @@ export default function ReflexSection() {
               key={r.id}
               className="group flex flex-col rounded-3xl bg-white p-6 shadow-sm ring-1 ring-gray-100 transition hover:-translate-y-1 hover:shadow-lg dark:bg-[#141821] dark:ring-white/10"
             >
+              <div className="mb-5 overflow-hidden rounded-2xl bg-rose-50 dark:bg-rose-950/30">
+                <Image
+                  src={`/illustrations/reflexes/reflex-${r.id}.png`}
+                  alt={pick(r.whatHappens, lang)}
+                  width={512}
+                  height={512}
+                  sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw"
+                  className="aspect-square w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+                />
+              </div>
+
               <div className="flex items-center gap-3">
                 <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-50 text-2xl dark:bg-rose-950/40">
                   {r.emoji}

@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { stages, stageThemes, reflexById, pick } from "@/lib/data";
 import { useApp } from "./Providers";
 import { ui, t } from "@/lib/i18n";
-import BabyIllustration from "./BabyIllustration";
 
 const STORAGE_KEY = "dev-checklist";
 
@@ -103,46 +103,60 @@ export default function StageExplorer() {
       >
         {/* 헤더 */}
         <div className={`${theme.soft} px-6 py-7 sm:px-10`}>
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-white shadow-lg dark:bg-white/10">
-                <BabyIllustration
-                  stageId={active.id}
-                  className={`h-16 w-16 ${theme.text}`}
+          <div className="grid items-center gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
+            <div>
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-2xl shadow-md dark:bg-white/10">
+                    {active.emoji}
+                  </span>
+                  <div>
+                    <div className={`text-sm font-bold ${theme.text}`}>
+                      {pick(active.shortAge, lang)}
+                    </div>
+                    <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white">
+                      {pick(active.ageRange, lang)}
+                    </h3>
+                  </div>
+                </div>
+                {/* 진행률 링 */}
+                <div className="hidden shrink-0 text-right sm:block">
+                  <div className={`text-2xl font-extrabold ${theme.text}`}>
+                    {progress}%
+                  </div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    {doneCount}/{allKeys.length}
+                  </div>
+                </div>
+              </div>
+              <p className="mt-4 text-gray-700 dark:text-gray-200">
+                {pick(active.summary, lang)}
+              </p>
+              {/* 진행률 바 */}
+              <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-white/60 dark:bg-black/20">
+                <div
+                  className={`h-full rounded-full ${theme.bg} transition-all duration-500`}
+                  style={{ width: `${progress}%` }}
                 />
               </div>
-              <div>
-                <div className={`text-sm font-bold ${theme.text}`}>
-                  {pick(active.shortAge, lang)}
-                </div>
-                <h3 className="text-2xl font-extrabold text-gray-900 dark:text-white">
-                  {pick(active.ageRange, lang)}
-                </h3>
-              </div>
+              <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                ✅ {t(ui.stages.checklistDesc, lang)}
+              </p>
             </div>
-            {/* 진행률 링 */}
-            <div className="hidden shrink-0 text-right sm:block">
-              <div className={`text-2xl font-extrabold ${theme.text}`}>
-                {progress}%
-              </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">
-                {doneCount}/{allKeys.length}
+
+            <div className="mx-auto w-full max-w-[280px]">
+              <div className="overflow-hidden rounded-3xl bg-white/70 p-2 shadow-lg ring-1 ring-white/80 dark:bg-white/10 dark:ring-white/10">
+                <Image
+                  src={`/illustrations/stages/stage-${active.id}.png`}
+                  alt={pick(active.summary, lang)}
+                  width={512}
+                  height={512}
+                  sizes="(min-width: 1024px) 280px, (min-width: 640px) 40vw, 80vw"
+                  className="h-auto w-full rounded-2xl"
+                />
               </div>
             </div>
           </div>
-          <p className="mt-4 text-gray-700 dark:text-gray-200">
-            {pick(active.summary, lang)}
-          </p>
-          {/* 진행률 바 */}
-          <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-white/60 dark:bg-black/20">
-            <div
-              className={`h-full rounded-full ${theme.bg} transition-all duration-500`}
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-            ✅ {t(ui.stages.checklistDesc, lang)}
-          </p>
         </div>
 
         {/* 본문 — 체크리스트 */}

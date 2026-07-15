@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR";
+  --font-sans: "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo",
+    "Noto Sans KR";
 }
 
 html {

@@ -101,11 +101,13 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
+        {/* 자체 호스팅 Pretendard (동적 서브셋 — 필요한 글리프 조각만 내려받음).
+            unicode-range 서브셋 CSS는 번들러를 거치면 92개 폰트가 전부 프리캐시에
+            잡히므로 public에서 직접 링크한다. */}
+        {/* eslint-disable-next-line @next/next/no-css-tags */}
         <link
           rel="stylesheet"
-          as="style"
-          crossOrigin="anonymous"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+          href="/fonts/pretendard/pretendardvariable-dynamic-subset.css"
         />
         <script
           dangerouslySetInnerHTML={{

@@ -637,9 +637,9 @@ export const stages: Stage[] = [
     },
     reflexes: ["babinski"],
     parentTip: {
-      ko: "맨발로 안전한 바닥을 걷게 하면 균형 감각에 도움이 돼요. 걷는 시기는 9~16개월까지 정상 범위가 넓어요.",
-      en: "Walking barefoot on a safe floor helps balance. Walking anytime from 9–16 months is within the normal range.",
-      vi: "Cho bé đi chân trần trên sàn an toàn giúp giữ thăng bằng. Biết đi trong khoảng 9–16 tháng đều nằm trong mức bình thường.",
+      ko: "맨발로 안전한 바닥을 걷게 하면 균형 감각에 도움이 돼요. 걷는 시기는 약 9~18개월까지 정상 범위가 넓어요.",
+      en: "Walking barefoot on a safe floor helps balance. Walking anytime from about 9–18 months is within the normal range.",
+      vi: "Cho bé đi chân trần trên sàn an toàn giúp giữ thăng bằng. Biết đi trong khoảng 9–18 tháng đều nằm trong mức bình thường.",
     },
     activities: {
       ko: [
@@ -804,7 +804,8 @@ export interface Reflex {
   appears: LText;
   disappears: LText;
   appearsMonth: number; // 타임라인용
-  disappearsMonth: number; // 타임라인용
+  disappearsMonthMin: number; // 타임라인용: 이 무렵부터 약해지기 시작
+  disappearsMonthMax: number; // 타임라인용: 보통 이때까지는 사라짐 (min과 같으면 단일 시점)
   whatHappens: LText;
   howToSee: LText;
   whyItMatters: LText;
@@ -818,12 +819,13 @@ export const reflexes: Reflex[] = [
     emoji: "😲",
     appears: { ko: "출생 시", en: "At birth", vi: "Khi sinh ra" },
     disappears: {
-      ko: "보통 4–6개월에 사라짐",
-      en: "Usually fades by 4–6 months",
-      vi: "Thường mất đi khi 4–6 tháng",
+      ko: "보통 3–6개월에 사라짐",
+      en: "Usually fades by 3–6 months",
+      vi: "Thường mất đi khi 3–6 tháng",
     },
     appearsMonth: 0,
-    disappearsMonth: 5,
+    disappearsMonthMin: 3,
+    disappearsMonthMax: 6,
     whatHappens: {
       ko: "갑작스러운 소리나 머리가 뒤로 젖혀지는 느낌에 양팔을 활짝 벌렸다가 다시 끌어안듯 오므리는 반응이에요.",
       en: "In response to a sudden sound or sensation of falling, the baby flings both arms wide, then pulls them back in as if to embrace.",
@@ -852,7 +854,8 @@ export const reflexes: Reflex[] = [
       vi: "Thường mất đi khoảng 4 tháng",
     },
     appearsMonth: 0,
-    disappearsMonth: 4,
+    disappearsMonthMin: 4,
+    disappearsMonthMax: 4,
     whatHappens: {
       ko: "뺨이나 입가를 건드리면 그쪽으로 고개를 돌리고 입을 벌려 젖을 찾는 반응이에요.",
       en: "Touch the cheek or corner of the mouth and the baby turns toward it, opening the mouth to seek the breast.",
@@ -885,7 +888,8 @@ export const reflexes: Reflex[] = [
       vi: "Dần chuyển thành bú có ý thức",
     },
     appearsMonth: 0,
-    disappearsMonth: 4,
+    disappearsMonthMin: 4,
+    disappearsMonthMax: 4,
     whatHappens: {
       ko: "입천장에 무언가 닿으면 자동으로 리듬감 있게 빠는 반응이에요.",
       en: "When something touches the roof of the mouth, the baby sucks rhythmically and automatically.",
@@ -914,7 +918,8 @@ export const reflexes: Reflex[] = [
       vi: "Thường mất đi khi 5–6 tháng",
     },
     appearsMonth: 0,
-    disappearsMonth: 6,
+    disappearsMonthMin: 5,
+    disappearsMonthMax: 6,
     whatHappens: {
       ko: "손바닥에 무언가 닿으면 손가락을 오므려 꽉 쥐는 반응이에요.",
       en: "When something touches the palm, the fingers curl in and grip tightly.",
@@ -943,7 +948,8 @@ export const reflexes: Reflex[] = [
       vi: "Thường mất đi khoảng 2 tháng",
     },
     appearsMonth: 0,
-    disappearsMonth: 2,
+    disappearsMonthMin: 2,
+    disappearsMonthMax: 2,
     whatHappens: {
       ko: "겨드랑이를 받쳐 발바닥을 바닥에 닿게 하면 한 발씩 내딛듯 다리를 움직이는 반응이에요.",
       en: "Held upright with the feet touching a surface, the baby moves the legs as if taking steps.",
@@ -967,12 +973,13 @@ export const reflexes: Reflex[] = [
     emoji: "🤺",
     appears: { ko: "출생 시", en: "At birth", vi: "Khi sinh ra" },
     disappears: {
-      ko: "보통 4–6개월에 사라짐",
-      en: "Usually fades by 4–6 months",
-      vi: "Thường mất đi khi 4–6 tháng",
+      ko: "보통 5–7개월에 사라짐",
+      en: "Usually fades by 5–7 months",
+      vi: "Thường mất đi khi 5–7 tháng",
     },
     appearsMonth: 0,
-    disappearsMonth: 6,
+    disappearsMonthMin: 5,
+    disappearsMonthMax: 7,
     whatHappens: {
       ko: "고개를 한쪽으로 돌리면 그쪽 팔다리는 펴지고 반대쪽은 구부러져, 마치 펜싱 자세 같은 모습이 돼요.",
       en: "When the head turns to one side, that side's limbs extend and the other side bends — like a fencing pose.",
@@ -1001,7 +1008,8 @@ export const reflexes: Reflex[] = [
       vi: "Thường mất đi khi 12–24 tháng",
     },
     appearsMonth: 0,
-    disappearsMonth: 24,
+    disappearsMonthMin: 12,
+    disappearsMonthMax: 24,
     whatHappens: {
       ko: "발바닥 바깥쪽을 발꿈치에서 발가락 쪽으로 긁으면 엄지발가락이 위로 젖혀지고 발가락이 부채처럼 펴지는 반응이에요.",
       en: "Stroke the outer sole from heel to toes and the big toe bends up while the toes fan out.",
@@ -1030,7 +1038,8 @@ export const reflexes: Reflex[] = [
       vi: "Thường mất đi khi 9–12 tháng",
     },
     appearsMonth: 0,
-    disappearsMonth: 12,
+    disappearsMonthMin: 9,
+    disappearsMonthMax: 12,
     whatHappens: {
       ko: "발가락 바로 아래 발바닥을 누르면 발가락들이 안쪽으로 오므라드는 반응이에요. 손바닥 잡기 반사의 발 버전이라고 보면 돼요.",
       en: "Press the sole just below the toes and the toes curl inward — like the foot version of the palmar grasp.",
@@ -1050,7 +1059,7 @@ export const reflexes: Reflex[] = [
   {
     id: "galant",
     name: { ko: "갈란트 반사", en: "Galant Reflex", vi: "Phản xạ Galant" },
-    englishName: "Galant · 척추 만곡",
+    englishName: "Galant · Trunk Incurvation",
     emoji: "🌙",
     appears: { ko: "출생 시", en: "At birth", vi: "Khi sinh ra" },
     disappears: {
@@ -1059,7 +1068,8 @@ export const reflexes: Reflex[] = [
       vi: "Thường mất đi khi 4–6 tháng",
     },
     appearsMonth: 0,
-    disappearsMonth: 5,
+    disappearsMonthMin: 4,
+    disappearsMonthMax: 6,
     whatHappens: {
       ko: "엎드린 아기의 등(척추 옆)을 위에서 아래로 쓸어내리면 자극한 쪽으로 엉덩이가 휘어지며 몸이 C자로 굽는 반응이에요.",
       en: "Stroke down one side of the spine on a baby lying on their tummy, and the hips swing toward that side, curving the body into a C shape.",
@@ -1088,7 +1098,8 @@ export const reflexes: Reflex[] = [
       vi: "Thường mất đi khi 9–11 tháng",
     },
     appearsMonth: 6,
-    disappearsMonth: 11,
+    disappearsMonthMin: 9,
+    disappearsMonthMax: 11,
     whatHappens: {
       ko: "고개를 숙이면 팔은 굽고 다리는 펴지며, 고개를 들면 반대로 팔은 펴지고 다리는 굽는 반응이에요. 네발 기기 자세를 잡는 데 잠깐 도움을 줍니다.",
       en: "When the head bends down, the arms bend and legs straighten; when the head lifts, the arms straighten and legs bend. It briefly helps baby get into the crawling position.",
@@ -1117,7 +1128,8 @@ export const reflexes: Reflex[] = [
       vi: "Dần tích hợp, yếu đi vào khoảng 4–6 tháng",
     },
     appearsMonth: 0,
-    disappearsMonth: 5,
+    disappearsMonthMin: 4,
+    disappearsMonthMax: 6,
     whatHappens: {
       ko: "머리를 뒤로 젖히면 온몸이 펴지고, 머리를 앞으로 숙이면 온몸이 굽는 반응이에요. 머리 위치가 몸 전체의 긴장에 영향을 줍니다.",
       en: "Tilting the head back makes the whole body extend; tucking it forward makes the body curl. Head position influences the body's overall tone.",

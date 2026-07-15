@@ -207,9 +207,9 @@ export const ui = {
       vi: "Khi nào phản xạ xuất hiện và mất đi",
     },
     timelineDesc: {
-      ko: "막대는 각 반사가 활발한 기간이에요. 대부분 생후 몇 달 안에 사라집니다.",
-      en: "Each bar shows how long a reflex stays active. Most fade within the first few months.",
-      vi: "Mỗi thanh cho thấy phản xạ hoạt động trong bao lâu. Hầu hết mất đi trong vài tháng đầu.",
+      ko: "진한 막대는 반사가 활발한 기간, 흐린 부분은 서서히 사라지는 시기예요. 대부분 생후 몇 달 안에 사라집니다.",
+      en: "The solid bar shows when a reflex is active; the lighter part is when it gradually fades. Most fade within the first few months.",
+      vi: "Thanh đậm là giai đoạn phản xạ hoạt động; phần nhạt là lúc phản xạ mất dần. Hầu hết mất đi trong vài tháng đầu.",
     },
     monthAxis: { ko: "개월", en: "mo", vi: "th" },
     beforeLabel: { ko: "자극 전", en: "Before", vi: "Trước" },

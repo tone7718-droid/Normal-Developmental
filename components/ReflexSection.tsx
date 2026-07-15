@@ -66,9 +66,21 @@ export default function ReflexSection() {
 
           <div className="mt-6 space-y-2.5">
             {reflexes.map((r, i) => {
+              const color = barColors[i % barColors.length];
               const left = (r.appearsMonth / MAX_MONTH) * 100;
-              const width =
-                ((r.disappearsMonth - r.appearsMonth) / MAX_MONTH) * 100;
+              const solidWidth =
+                ((r.disappearsMonthMin - r.appearsMonth) / MAX_MONTH) * 100;
+              const fadeWidth =
+                ((r.disappearsMonthMax - r.disappearsMonthMin) / MAX_MONTH) *
+                100;
+              const hasFade = fadeWidth > 0;
+              const monthLabel = `${
+                hasFade
+                  ? `${r.disappearsMonthMin}–${r.disappearsMonthMax}`
+                  : r.disappearsMonthMax
+              }${t(ui.reflexSection.monthAxis, lang)}`;
+              // 막대가 오른쪽 끝에 닿으면 라벨을 막대 안에, 아니면 막대 뒤에 표시
+              const labelInside = r.disappearsMonthMax >= MAX_MONTH - 4;
               return (
                 <div key={r.id} className="flex items-center gap-3">
                   <div className="flex w-28 shrink-0 items-center gap-1.5 sm:w-36">
@@ -79,16 +91,38 @@ export default function ReflexSection() {
                   </div>
                   <div className="relative h-6 flex-1 rounded-full bg-gray-100 dark:bg-white/5">
                     <div
-                      className={`absolute top-0 flex h-6 items-center justify-end rounded-full ${
-                        barColors[i % barColors.length]
-                      } pr-2`}
-                      style={{ left: `${left}%`, width: `${width}%` }}
+                      className={`absolute top-0 h-6 ${color} ${
+                        hasFade ? "rounded-l-full" : "rounded-full"
+                      }`}
+                      style={{ left: `${left}%`, width: `${solidWidth}%` }}
+                    />
+                    {hasFade && (
+                      // 서서히 사라지는 구간(min~max)은 흐리게 표시
+                      <div
+                        className={`absolute top-0 h-6 ${color} rounded-r-full opacity-40`}
+                        style={{
+                          left: `${left + solidWidth}%`,
+                          width: `${fadeWidth}%`,
+                        }}
+                      />
+                    )}
+                    <span
+                      className={`absolute top-0 flex h-6 items-center text-[10px] font-bold ${
+                        labelInside
+                          ? "justify-end pr-2 text-gray-700 dark:text-gray-100"
+                          : "pl-2 text-gray-400 dark:text-gray-500"
+                      }`}
+                      style={
+                        labelInside
+                          ? {
+                              left: `${left}%`,
+                              width: `${solidWidth + fadeWidth}%`,
+                            }
+                          : { left: `${left + solidWidth + fadeWidth}%` }
+                      }
                     >
-                      <span className="text-[10px] font-bold text-white/90">
-                        {r.disappearsMonth}
-                        {t(ui.reflexSection.monthAxis, lang)}
-                      </span>
-                    </div>
+                      {monthLabel}
+                    </span>
                   </div>
                 </div>
               );

@@ -36,6 +36,7 @@ export function Providers({ children }: { children: ReactNode }) {
       window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     if (savedLang === "ko" || savedLang === "en" || savedLang === "vi")
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage는 클라이언트에서만 읽을 수 있어 마운트 후 복원이 필요
       setLangState(savedLang);
     const initialTheme: Theme =
       savedTheme === "dark" || savedTheme === "light"

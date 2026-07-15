@@ -26,8 +26,8 @@
 
 ## 🛠 기술 스택
 
-- [Next.js 14](https://nextjs.org/) (App Router)
-- [React 18](https://react.dev/)
+- [Next.js 16](https://nextjs.org/) (App Router)
+- [React 19](https://react.dev/)
 - [Tailwind CSS 3](https://tailwindcss.com/)
 - TypeScript
 

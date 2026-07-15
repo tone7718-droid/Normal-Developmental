@@ -18,6 +18,7 @@ export default function StageExplorer() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage는 클라이언트에서만 읽을 수 있어 마운트 후 복원이 필요
       if (saved) setChecked(JSON.parse(saved));
     } catch {}
     setLoaded(true);

@@ -119,6 +119,16 @@ export const ui = {
       en: "That's before birth or a future date. Please check the date.",
       vi: "Đó là trước khi sinh hoặc ngày trong tương lai. Vui lòng kiểm tra lại ngày.",
     },
+    beforeDue: {
+      ko: "아직 출산 예정일이 지나지 않았어요. 이 시기에는 교정 연령을 0개월로 보고, 신생아(0–1개월) 내용을 참고하세요.",
+      en: "The due date hasn't passed yet. For now, treat the corrected age as 0 months and refer to the newborn (0–1 month) stage.",
+      vi: "Chưa đến ngày dự sinh. Hiện tại hãy xem tuổi điều chỉnh là 0 tháng và tham khảo giai đoạn sơ sinh (0–1 tháng).",
+    },
+    notPreterm: {
+      ko: "출산 예정일이 생년월일보다 빠르거나 같아 교정 연령을 적용하지 않았어요. 교정 연령은 예정일보다 일찍 태어난 아기에게 사용해요.",
+      en: "The due date is on or before the birth date, so corrected age was not applied. Corrected age is for babies born before their due date.",
+      vi: "Ngày dự sinh bằng hoặc sớm hơn ngày sinh nên không áp dụng tuổi điều chỉnh. Tuổi điều chỉnh dành cho bé sinh trước ngày dự sinh.",
+    },
     over: {
       ko: "이 가이드는 24개월까지를 다뤄요. 곧 더 큰 아이를 위한 내용도 준비할게요!",
       en: "This guide covers up to 24 months. Content for older children is coming soon!",

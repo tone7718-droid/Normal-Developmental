@@ -41,15 +41,56 @@ export default function AgeCalculator() {
   const [dueDate, setDueDate] = useState("");
 
   const result = useMemo(() => {
-    const baseStr = corrected && dueDate ? dueDate : birth;
-    if (!baseStr) return null;
-    const base = parseLocalDate(baseStr);
+    if (!birth) return null;
+    const birthDate = parseLocalDate(birth);
+    if (!birthDate) return null;
     const now = new Date();
-    if (!base) return null;
-    const months = monthsBetween(base, now);
-    if (months < 0) return { status: "future" as const };
-    if (months > 24) return { status: "over" as const, months };
-    return { status: "ok" as const, months, stageId: matchStage(months) };
+    const chronological = monthsBetween(birthDate, now);
+    if (chronological < 0) return { status: "future" as const };
+
+    const due = corrected && dueDate ? parseLocalDate(dueDate) : null;
+    if (due) {
+      // 예정일이 생년월일과 같거나 빠르면(만삭·과숙) 교정 연령이 무의미하다
+      if (due.getTime() <= birthDate.getTime()) {
+        if (chronological > 24)
+          return { status: "over" as const, months: chronological };
+        return {
+          status: "ok" as const,
+          months: chronological,
+          stageId: matchStage(chronological),
+          corrected: false,
+          note: "notPreterm" as const,
+        };
+      }
+      const correctedMonths = monthsBetween(due, now);
+      // 태어났지만 아직 예정일 전인 이른둥이 → 교정 연령 0개월로 안내
+      if (correctedMonths < 0) {
+        return {
+          status: "ok" as const,
+          months: 0,
+          stageId: matchStage(0),
+          corrected: true,
+          note: "beforeDue" as const,
+        };
+      }
+      if (correctedMonths > 24)
+        return { status: "over" as const, months: correctedMonths };
+      return {
+        status: "ok" as const,
+        months: correctedMonths,
+        stageId: matchStage(correctedMonths),
+        corrected: true,
+      };
+    }
+
+    if (chronological > 24)
+      return { status: "over" as const, months: chronological };
+    return {
+      status: "ok" as const,
+      months: chronological,
+      stageId: matchStage(chronological),
+      corrected: false,
+    };
   }, [birth, dueDate, corrected]);
 
   const goToStage = (id: string) => {
@@ -131,12 +172,17 @@ export default function AgeCalculator() {
                       {result.months}
                     </span>{" "}
                     {t(ui.calculator.monthsUnit, lang)}
-                    {corrected && dueDate && (
+                    {result.corrected && (
                       <span className="ml-1 text-xs text-gray-400">
                         ({t(ui.calculator.correctedNote, lang)})
                       </span>
                     )}
                   </p>
+                  {result.note && (
+                    <p className="mt-2 text-xs leading-relaxed text-amber-700 dark:text-amber-300">
+                      {t(ui.calculator[result.note], lang)}
+                    </p>
+                  )}
                   {result.stageId && (
                     <button
                       onClick={() => goToStage(result.stageId!)}

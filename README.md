@@ -17,7 +17,7 @@
 - **위험 신호 요약** — 시기별 주의 신호를 한곳에 모아 빠르게 점검
 - **자주 묻는 질문** — 발달 속도, 이른둥이 교정 연령, 터미타임, 보행기, 까치발 등 부모들이 가장 궁금해하는 내용
 - **한국어 / 영어 / 베트남어(Tiếng Việt) 전환 · 다크 모드** — 우측 상단 언어 메뉴와 테마 토글로 바꿀 수 있고, 선택은 기기에 저장
-- **앱처럼 설치 (PWA)** — 스마트폰 홈 화면에 추가해 앱처럼 쓸 수 있고, 서비스 워커가 한 번 본 화면을 캐시해 인터넷이 불안정할 때도 이미 본 내용은 다시 열리는 경우가 많아요
+- **앱처럼 설치 + 오프라인 보기 (PWA)** — 스마트폰 홈 화면에 추가해 앱처럼 쓸 수 있고, 서비스 워커(Serwist)가 홈 화면과 핵심 자산을 미리 캐시해 인터넷이 없어도 다시 볼 수 있어요 (폰트·아직 안 본 이미지는 온라인에서 본 뒤부터 캐시)
 - **공유 친화적 메타데이터 (SEO)** — 카카오톡·SNS로 링크를 보내면 깔끔한 미리보기 카드(OG 이미지)가 뜨고, 검색엔진용 구조화 데이터(FAQ)·사이트맵·robots를 제공
 - **참고 자료** — WHO·CDC·미국소아과학회(AAP)·국민건강보험공단 출처 링크
 
@@ -29,6 +29,8 @@
 - [Next.js 16](https://nextjs.org/) (App Router)
 - [React 19](https://react.dev/)
 - [Tailwind CSS 3](https://tailwindcss.com/)
+- [Serwist](https://serwist.pages.dev/) (PWA 오프라인 지원)
+- [Pretendard](https://github.com/orioncactus/pretendard) 자체 호스팅 (동적 서브셋)
 - TypeScript
 
 ## 🚀 로컬 실행
@@ -64,6 +66,8 @@ app/
   twitter-image.jpg   # 트위터 카드 이미지 (OG와 동일)
   sitemap.ts          # 사이트맵
   robots.ts           # robots.txt
+  sw.ts               # 서비스 워커 소스 (Serwist — 프리캐시·런타임 캐시)
+  serwist/[path]/route.ts # 빌드 시 서비스 워커 번들 + 프리캐시 목록 주입
 components/
   Providers.tsx       # 언어(ko/en/vi) · 다크모드 전역 상태
   Nav.tsx             # 상단 네비게이션 · 언어/테마 토글

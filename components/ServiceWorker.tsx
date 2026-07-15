@@ -11,10 +11,18 @@ export default function ServiceWorker() {
       !("serviceWorker" in navigator)
     )
       return;
-    const onLoad = () =>
-      navigator.serviceWorker.register("/sw.js").catch(() => {});
-    window.addEventListener("load", onLoad);
-    return () => window.removeEventListener("load", onLoad);
+    const register = () =>
+      navigator.serviceWorker
+        .register("/serwist/sw.js", { scope: "/" })
+        .catch(() => {});
+    // 하이드레이션이 load 이벤트 이후에 끝나면 리스너가 불리지 않으므로
+    // 이미 로드가 끝난 상태면 즉시 등록한다.
+    if (document.readyState === "complete") {
+      register();
+      return;
+    }
+    window.addEventListener("load", register);
+    return () => window.removeEventListener("load", register);
   }, []);
 
   return null;

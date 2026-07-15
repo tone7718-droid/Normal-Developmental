@@ -1,6 +1,6 @@
 // 아기 발달 가이드 — 오프라인 지원 서비스 워커
 // 버전을 올리면 이전 캐시가 자동 정리된다.
-const CACHE = "baby-dev-v1";
+const CACHE = "baby-dev-v2";
 const OFFLINE_URLS = ["/"];
 
 self.addEventListener("install", (event) => {

@@ -7,6 +7,14 @@
     "Noto Sans KR";
 }
 
+/* 베트남어 로케일: 성조 글리프까지 한 서체로 (Pretendard엔 U+1Exx 글리프가 없음).
+   preflight가 html에 font-family를 두므로 body에서 다시 선언해 변수 재정의가 먹게 한다. */
+.font-vi {
+  --font-sans: "Be Vietnam Pro", "Pretendard Variable", "Pretendard",
+    system-ui, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;

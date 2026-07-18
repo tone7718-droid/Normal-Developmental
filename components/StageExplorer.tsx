@@ -5,22 +5,35 @@ import { useEffect, useState } from "react";
 import { stages, stageThemes, reflexById, pick } from "@/lib/data";
 import { useApp } from "./Providers";
 import { ui, t } from "@/lib/i18n";
+import { computeAge, formatDateInputValue, loadSavedBirth } from "@/lib/age";
 
 const STORAGE_KEY = "dev-checklist";
+
+// 값: 예전 데이터는 boolean, 새 데이터는 체크한 날짜(YYYY-MM-DD)
+type Checked = Record<string, boolean | string>;
 
 export default function StageExplorer() {
   const { lang } = useApp();
   const [activeId, setActiveId] = useState(stages[0].id);
-  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [checked, setChecked] = useState<Checked>({});
   const [loaded, setLoaded] = useState(false);
+  const [autoMonths, setAutoMonths] = useState<number | null>(null);
 
-  // 체크리스트 복원
+  // 체크리스트 복원 + 저장된 생일이 있으면 현재 시기를 자동 선택
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage는 클라이언트에서만 읽을 수 있어 마운트 후 복원이 필요
       if (saved) setChecked(JSON.parse(saved));
     } catch {}
+    const birth = loadSavedBirth();
+    if (birth) {
+      const age = computeAge(birth.birth, birth.corrected, birth.dueDate);
+      if (age?.status === "ok" && age.stageId) {
+        setActiveId(age.stageId);
+        setAutoMonths(age.months);
+      }
+    }
     setLoaded(true);
   }, []);
 
@@ -56,8 +69,47 @@ export default function StageExplorer() {
     ? Math.round((doneCount / allKeys.length) * 100)
     : 0;
 
+  // 체크하는 순간의 날짜를 기록한다 (해제하면 기록도 삭제)
   const toggle = (key: string) =>
-    setChecked((prev) => ({ ...prev, [key]: !prev[key] }));
+    setChecked((prev) => {
+      const next = { ...prev };
+      if (next[key]) delete next[key];
+      else next[key] = formatDateInputValue(new Date());
+      return next;
+    });
+
+  // 체크한 항목 전체(모든 시기)를 날짜와 함께 텍스트로 내보내기
+  const exportRecords = () => {
+    const lines: string[] = [`${t(ui.meta.title, lang)} — ${formatDateInputValue(new Date())}`];
+    let total = 0;
+    for (const s of stages) {
+      const g = pick(s.grossMotor, lang);
+      const f = pick(s.fineMotor, lang);
+      const items = [
+        ...g.map((text, i) => ({ text, key: `${s.id}:g:${i}` })),
+        ...f.map((text, i) => ({ text, key: `${s.id}:f:${i}` })),
+      ].filter((it) => checked[it.key]);
+      if (!items.length) continue;
+      lines.push("", `■ ${pick(s.ageRange, lang)}`);
+      for (const it of items) {
+        const v = checked[it.key];
+        lines.push(`  ✓ ${it.text}${typeof v === "string" ? ` (${v})` : ""}`);
+        total++;
+      }
+    }
+    if (!total) {
+      alert(t(ui.stages.exportEmpty, lang));
+      return;
+    }
+    const text = lines.join("\n");
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "baby-milestones.txt";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <section
@@ -71,6 +123,12 @@ export default function StageExplorer() {
         <p className="mx-auto mt-4 max-w-2xl text-gray-600 dark:text-gray-300">
           {t(ui.stages.desc, lang)}
         </p>
+        {autoMonths != null && (
+          <p className="mx-auto mt-3 inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-4 py-1.5 text-sm font-semibold text-rose-600 ring-1 ring-rose-100 dark:bg-rose-950/40 dark:text-rose-300 dark:ring-rose-500/20">
+            🎂 {t(ui.stages.autoNote, lang)} {autoMonths}
+            {t(ui.calculator.monthsUnit, lang)}
+          </p>
+        )}
       </div>
 
       {/* 연령 선택 타임라인 */}
@@ -159,6 +217,15 @@ export default function StageExplorer() {
               <p className="mt-1 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
                 {t(ui.stages.checklistNote, lang)}
               </p>
+              <div className="mt-3">
+                <button
+                  onClick={exportRecords}
+                  title={t(ui.stages.exportHint, lang)}
+                  className="rounded-full border border-gray-200 bg-white px-4 py-1.5 text-xs font-semibold text-gray-600 transition hover:bg-gray-50 dark:border-white/15 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10"
+                >
+                  {t(ui.stages.exportLabel, lang)}
+                </button>
+              </div>
             </div>
 
             <div className="mx-auto w-full max-w-[280px]">
@@ -306,7 +373,7 @@ function CheckBlock({
   icon: string;
   items: string[];
   keyPrefix: string;
-  checked: Record<string, boolean>;
+  checked: Checked;
   toggle: (key: string) => void;
   dotClass: string;
 }) {
@@ -322,7 +389,9 @@ function CheckBlock({
       <ul className="mt-4 space-y-1">
         {items.map((item, i) => {
           const key = `${keyPrefix}:${i}`;
-          const isOn = !!checked[key];
+          const value = checked[key];
+          const isOn = !!value;
+          const date = typeof value === "string" ? value : null;
           return (
             <li key={i}>
               <button
@@ -349,6 +418,11 @@ function CheckBlock({
                 >
                   {item}
                 </span>
+                {date && (
+                  <span className="ml-auto shrink-0 self-center rounded-full bg-gray-100 px-2 py-0.5 text-[11px] tabular-nums text-gray-500 dark:bg-white/10 dark:text-gray-400">
+                    {date.slice(5).replace("-", "/")}
+                  </span>
+                )}
               </button>
             </li>
           );

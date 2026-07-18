@@ -2,6 +2,23 @@ import type { Lang } from "./data";
 
 // UI 문자열 (한국어/영어/베트남어)
 export const ui = {
+  meta: {
+    title: {
+      ko: "아기 운동 발달 가이드",
+      en: "Baby Motor Development Guide",
+      vi: "Cẩm nang phát triển vận động của bé",
+    },
+    tagline: {
+      ko: "우리 아기, 지금 어디쯤일까요?",
+      en: "Where is your baby right now?",
+      vi: "Bé của bạn đang ở giai đoạn nào?",
+    },
+    description: {
+      ko: "신생아부터 두 돌까지, 개월별 아기의 정상 운동 발달 과정과 원시 반사를 부모가 쉽게 이해할 수 있도록 정리한 가이드입니다.",
+      en: "A parent-friendly guide to normal motor development and primitive reflexes, month by month from newborn to age 2.",
+      vi: "Cẩm nang giúp cha mẹ dễ hiểu về quá trình phát triển vận động bình thường và các phản xạ nguyên thủy của bé theo từng tháng, từ sơ sinh đến 2 tuổi.",
+    },
+  },
   nav: {
     intro: { ko: "소개", en: "Overview", vi: "Giới thiệu" },
     timeline: { ko: "개월별 발달", en: "By month", vi: "Theo tháng" },
@@ -188,6 +205,26 @@ export const ui = {
     observedCount: { ko: "확인한 움직임", en: "Observed movements", vi: "Cử động đã quan sát" },
     periodLabel: { ko: "발달 시기 선택", en: "Choose a developmental period", vi: "Chọn giai đoạn phát triển" },
     swipeHint: { ko: "좌우로 밀어 다른 시기를 볼 수 있어요", en: "Swipe sideways to see more periods", vi: "Vuốt ngang để xem thêm giai đoạn" },
+    autoNote: {
+      ko: "저장된 생일 기준, 지금",
+      en: "Based on the saved birth date — now",
+      vi: "Theo ngày sinh đã lưu — hiện tại",
+    },
+    exportLabel: {
+      ko: "📄 관찰 기록 내보내기",
+      en: "📄 Export observations",
+      vi: "📄 Xuất bản ghi theo dõi",
+    },
+    exportEmpty: {
+      ko: "아직 체크한 항목이 없어요.",
+      en: "Nothing has been checked yet.",
+      vi: "Chưa có mục nào được đánh dấu.",
+    },
+    exportHint: {
+      ko: "소아과 상담 때 보여줄 수 있도록, 체크한 항목과 날짜를 파일로 저장해요.",
+      en: "Saves your checked items and dates to a file you can show your pediatrician.",
+      vi: "Lưu các mục đã đánh dấu kèm ngày vào một tệp để bạn có thể đưa cho bác sĩ nhi xem.",
+    },
   },
   reflexSection: {
     badge: { ko: "✨ 타고난 능력", en: "✨ Inborn abilities", vi: "✨ Khả năng bẩm sinh" },

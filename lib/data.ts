@@ -494,17 +494,17 @@ export const stages: Stage[] = [
     },
     watchOut: {
       ko: [
-        "받쳐줘도 혼자 앉지 못해요.",
+        "받쳐 앉혀 줘도 앉은 자세를 유지하지 못해요.",
         "체중을 다리로 전혀 싣지 않으려 해요.",
         "한쪽 팔다리만 주로 쓰는 비대칭이 뚜렷해요.",
       ],
       en: [
-        "Can't sit alone even with support.",
+        "Can't stay sitting even when supported.",
         "Refuses to bear any weight on the legs.",
         "Strongly favors one side (marked asymmetry).",
       ],
       vi: [
-        "Không tự ngồi được dù có người đỡ.",
+        "Không giữ được tư thế ngồi dù có người đỡ.",
         "Hoàn toàn không chịu dồn trọng lượng lên chân.",
         "Chỉ dùng một bên tay chân rõ rệt (mất cân đối).",
       ],
@@ -883,9 +883,9 @@ export const reflexes: Reflex[] = [
       vi: "Trước khi sinh (khoảng tuần 32)",
     },
     disappears: {
-      ko: "점차 의식적인 빨기로 전환",
-      en: "Gradually becomes voluntary sucking",
-      vi: "Dần chuyển thành bú có ý thức",
+      ko: "3~4개월경부터 점차 의식적인 빨기로 전환",
+      en: "From around 3–4 months, gradually becomes voluntary sucking",
+      vi: "Từ khoảng 3–4 tháng, dần chuyển thành bú có ý thức",
     },
     appearsMonth: 0,
     disappearsMonthMin: 4,
@@ -968,7 +968,11 @@ export const reflexes: Reflex[] = [
   },
   {
     id: "atnr",
-    name: { ko: "비대칭 긴장성 경반사", en: "ATNR", vi: "Phản xạ ATNR" },
+    name: {
+      ko: "비대칭 긴장성 경반사",
+      en: "ATNR (fencing reflex)",
+      vi: "Phản xạ ATNR (tư thế đấu kiếm)",
+    },
     englishName: "ATNR · Fencing",
     emoji: "🤺",
     appears: { ko: "출생 시", en: "At birth", vi: "Khi sinh ra" },
@@ -1088,7 +1092,11 @@ export const reflexes: Reflex[] = [
   },
   {
     id: "stnr",
-    name: { ko: "대칭 긴장성 경반사", en: "STNR", vi: "Phản xạ STNR" },
+    name: {
+      ko: "대칭 긴장성 경반사",
+      en: "STNR (symmetric neck reflex)",
+      vi: "Phản xạ STNR (phản xạ cổ đối xứng)",
+    },
     englishName: "STNR · Symmetric Tonic Neck",
     emoji: "🐱",
     appears: { ko: "보통 6–9개월에 나타남", en: "Appears around 6–9 months", vi: "Xuất hiện khoảng 6–9 tháng" },
@@ -1118,7 +1126,11 @@ export const reflexes: Reflex[] = [
   },
   {
     id: "tlr",
-    name: { ko: "긴장성 미로 반사", en: "TLR", vi: "Phản xạ TLR" },
+    name: {
+      ko: "긴장성 미로 반사",
+      en: "TLR (labyrinthine reflex)",
+      vi: "Phản xạ TLR (phản xạ mê đạo)",
+    },
     englishName: "TLR · Tonic Labyrinthine",
     emoji: "🤸",
     appears: { ko: "출생 시", en: "At birth", vi: "Khi sinh ra" },

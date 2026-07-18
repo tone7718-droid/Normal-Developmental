@@ -19,10 +19,10 @@ const serwist = new Serwist({
   navigationPreload: true,
   runtimeCaching: defaultCache,
   fallbacks: {
-    // 오프라인에서 캐시에 없는 페이지 요청은 프리캐시된 홈으로 폴백
+    // 오프라인에서 캐시에 없는 페이지 요청은 프리캐시된 한국어 홈으로 폴백
     entries: [
       {
-        url: "/",
+        url: "/ko",
         matcher({ request }) {
           return request.destination === "document";
         },

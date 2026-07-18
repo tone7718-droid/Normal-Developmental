@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import { useApp } from "./Providers";
 import { ui, t } from "@/lib/i18n";
 import { stages, stageMonthRange, pick } from "@/lib/data";
@@ -39,6 +39,12 @@ export default function AgeCalculator() {
   const [birth, setBirth] = useState("");
   const [corrected, setCorrected] = useState(false);
   const [dueDate, setDueDate] = useState("");
+  // max는 클라이언트에서만 계산 — 서버와 브라우저의 날짜가 다른 경우의 하이드레이션 불일치 방지
+  const maxDate = useSyncExternalStore(
+    () => () => {},
+    () => formatDateInputValue(new Date()),
+    () => undefined,
+  );
 
   const result = useMemo(() => {
     if (!birth) return null;
@@ -119,7 +125,7 @@ export default function AgeCalculator() {
                 id="baby-birth-date"
                 type="date"
                 value={birth}
-                max={formatDateInputValue(new Date())}
+                max={maxDate}
                 onChange={(e) => setBirth(e.target.value)}
                 className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-800 outline-none ring-rose-200 transition focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
               />

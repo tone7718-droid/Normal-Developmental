@@ -783,7 +783,7 @@ export const stages: Stage[] = [
         "Stack several large blocks together.",
       ],
       vi: [
-        "Chơi ngoài trời với đá và ném bóng.",
+        "Cho bé chơi đá bóng và ném bóng ngoài trời.",
         "Cùng chơi giữ thăng bằng như cầu trượt, lên xuống cầu thang.",
         "Cùng xếp chồng nhiều khối lớn.",
       ],
@@ -1182,7 +1182,7 @@ export const checkups: Checkup[] = [
     focus: {
       ko: "발달선별검사, 영양·수면 상담",
       en: "Developmental screening test, nutrition & sleep",
-      vi: "Test sàng lọc phát triển, tư vấn dinh dưỡng & giấc ngủ",
+      vi: "Sàng lọc phát triển, tư vấn dinh dưỡng & giấc ngủ",
     },
   },
   {

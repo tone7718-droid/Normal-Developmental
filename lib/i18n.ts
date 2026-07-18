@@ -238,7 +238,7 @@ export const ui = {
     badge: {
       ko: "국가 무료 검진",
       en: "Free national check-ups",
-      vi: "Khám miễn phí theo quốc gia",
+      vi: "Khám sức khỏe miễn phí của nhà nước",
     },
     title: {
       ko: "영유아 건강검진과 함께 보기",
@@ -364,7 +364,7 @@ export const ui = {
     ],
   },
   mythBusting: {
-    badge: { ko: "💡 근거로 확인하기", en: "💡 Evidence check", vi: "💡 Kiểm chứng bằng bằng chứng" },
+    badge: { ko: "💡 근거로 확인하기", en: "💡 Evidence check", vi: "💡 Dựa trên bằng chứng" },
     title: { ko: "흔한 오해와 진실", en: "Common myths & facts", vi: "Hiểu lầm thường gặp & sự thật" },
     desc: {
       ko: "육아 중 자주 듣는 이야기들을, 최신 근거 기반 소아 발달 관점에서 정리했어요.",
@@ -441,11 +441,11 @@ export const ui = {
     title: {
       ko: "한눈에 보는 발달 위험 신호",
       en: "Developmental warning signs at a glance",
-      vi: "Dấu hiệu cảnh báo phát triển trong nháy mắt",
+      vi: "Tổng quan dấu hiệu cảnh báo phát triển",
     },
     desc: {
       ko: "아래는 시기별로 '전문가와 상담'을 권하는 신호를 모은 거예요. 한두 가지에 해당한다고 꼭 문제가 있는 것은 아니지만, 여러 개가 보이거나 걱정된다면 소아청소년과에 상담하세요.",
-      en: "Below gathers the 'talk to a professional' signs for each age. Matching one or two doesn't necessarily mean a problem, but if several appear or you're worried, consult a pediatrician.",
+      en: "Below are the 'talk to a professional' signs for each age. Matching one or two doesn't necessarily mean a problem, but if several appear or you're worried, consult a pediatrician.",
       vi: "Dưới đây tổng hợp các dấu hiệu 'nên hỏi chuyên gia' theo từng độ tuổi. Trùng một hai dấu hiệu không hẳn là có vấn đề, nhưng nếu thấy nhiều hoặc bạn lo lắng, hãy tư vấn bác sĩ nhi khoa.",
     },
     emphasis: {

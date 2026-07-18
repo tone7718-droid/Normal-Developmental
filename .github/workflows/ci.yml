@@ -22,8 +22,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Type check
-        run: npx tsc --noEmit
-
       - name: Build
         run: npm run build
+
+      # 빌드가 next-env.d.ts를 생성한 뒤에 tsc를 실행해야 안정적이다
+      - name: Type check
+        run: npx tsc --noEmit

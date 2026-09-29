@@ -8,6 +8,6 @@ export const { dynamic, dynamicParams, revalidate, generateStaticParams, GET } =
     useNativeEsbuild: true,
     globIgnores: ["public/fonts/**/*"],
     // 정적 자산 글롭에는 페이지 HTML이 없으므로 홈 문서를 직접 프리캐시해
-    // 오프라인 내비게이션 폴백("/")이 동작하게 한다. revision은 빌드마다 갱신.
-    additionalPrecacheEntries: [{ url: "/", revision: Date.now().toString() }],
+    // 오프라인 내비게이션 폴백("/ko")이 동작하게 한다. revision은 빌드마다 갱신.
+    additionalPrecacheEntries: ["/ko", "/en", "/vi"].map((url) => ({ url, revision: Date.now().toString() })),
   });

@@ -17,6 +17,12 @@ export interface LList {
 
 export const pick = <T,>(v: { ko: T; en: T; vi: T }, lang: Lang): T => v[lang];
 
+export interface Milestone {
+  /** Permanent ID: keep when rewording or reordering. Never reuse for another item. */
+  id: string;
+  text: LText;
+}
+
 export interface Stage {
   id: string;
   ageRange: LText;
@@ -24,8 +30,8 @@ export interface Stage {
   emoji: string;
   theme: string;
   summary: LText;
-  grossMotor: LList;
-  fineMotor: LList;
+  grossMotor: Milestone[];
+  fineMotor: Milestone[];
   reflexes: string[];
   parentTip: LText;
   activities: LList;
@@ -127,34 +133,50 @@ export const stages: Stage[] = [
       en: "Mostly lying down. Baby can't yet control their body and responds to the world through inborn 'primitive reflexes'.",
       vi: "Bé chủ yếu nằm. Bé chưa tự kiểm soát được cơ thể và phản ứng với thế giới bằng các 'phản xạ nguyên thủy' bẩm sinh.",
     },
-    grossMotor: {
-      ko: [
-        "엎드리면 고개를 잠깐(몇 초) 옆으로 돌릴 수 있어요.",
-        "팔다리는 구부린 채로 자주 꿈틀거려요.",
-        "안아 올리면 머리가 뒤로 푹 젖혀져 꼭 받쳐줘야 해요.",
-      ],
-      en: [
-        "Can briefly turn the head to the side (a few seconds) when on the tummy.",
-        "Arms and legs stay bent and wriggle often.",
-        "Head flops back when lifted, so it must be supported.",
-      ],
-      vi: [
-        "Khi nằm sấp, bé có thể quay đầu sang một bên trong giây lát (vài giây).",
-        "Tay chân thường co lại và ngọ nguậy.",
-        "Khi bế lên, đầu bé ngả ra sau nên cần đỡ đầu cẩn thận.",
-      ],
-    },
-    fineMotor: {
-      ko: ["손은 대부분 주먹을 꼭 쥐고 있어요.", "손바닥에 닿는 것을 반사적으로 꽉 잡아요."],
-      en: [
-        "Hands are mostly held in tight fists.",
-        "Reflexively grips anything that touches the palm.",
-      ],
-      vi: [
-        "Bàn tay thường nắm chặt thành nắm đấm.",
-        "Theo phản xạ, bé nắm chặt bất cứ thứ gì chạm vào lòng bàn tay.",
-      ],
-    },
+    grossMotor: [
+      {
+        "id": "0-1-g01",
+        "text": {
+          "ko": "엎드리면 고개를 잠깐(몇 초) 옆으로 돌릴 수 있어요.",
+          "en": "Can briefly turn the head to the side (a few seconds) when on the tummy.",
+          "vi": "Khi nằm sấp, bé có thể quay đầu sang một bên trong giây lát (vài giây)."
+        }
+      },
+      {
+        "id": "0-1-g02",
+        "text": {
+          "ko": "팔다리는 구부린 채로 자주 꿈틀거려요.",
+          "en": "Arms and legs stay bent and wriggle often.",
+          "vi": "Tay chân thường co lại và ngọ nguậy."
+        }
+      },
+      {
+        "id": "0-1-g03",
+        "text": {
+          "ko": "안아 올리면 머리가 뒤로 푹 젖혀져 꼭 받쳐줘야 해요.",
+          "en": "Head flops back when lifted, so it must be supported.",
+          "vi": "Khi bế lên, đầu bé ngả ra sau nên cần đỡ đầu cẩn thận."
+        }
+      }
+    ],
+    fineMotor: [
+      {
+        "id": "0-1-f01",
+        "text": {
+          "ko": "손은 대부분 주먹을 꼭 쥐고 있어요.",
+          "en": "Hands are mostly held in tight fists.",
+          "vi": "Bàn tay thường nắm chặt thành nắm đấm."
+        }
+      },
+      {
+        "id": "0-1-f02",
+        "text": {
+          "ko": "손바닥에 닿는 것을 반사적으로 꽉 잡아요.",
+          "en": "Reflexively grips anything that touches the palm.",
+          "vi": "Theo phản xạ, bé nắm chặt bất cứ thứ gì chạm vào lòng bàn tay."
+        }
+      }
+    ],
     reflexes: ["moro", "rooting", "sucking", "grasp", "plantar", "tlr", "stepping"],
     parentTip: {
       ko: "깨어 있을 때 하루 몇 분씩 '터미타임(엎드려 놀기)'을 시작해 보세요. 목과 어깨 힘을 기르는 첫걸음이에요.",
@@ -207,28 +229,42 @@ export const stages: Stage[] = [
       en: "Starts gaining the strength to lift the head. The first 'social smile' at people appears.",
       vi: "Bé bắt đầu có sức nâng đầu. 'Nụ cười xã hội' khi nhìn thấy người cũng xuất hiện.",
     },
-    grossMotor: {
-      ko: ["엎드린 자세에서 고개를 45도 정도 들어요.", "누워서 팔다리를 더 부드럽게 움직여요."],
-      en: [
-        "Lifts the head about 45 degrees while on the tummy.",
-        "Moves arms and legs more smoothly when lying down.",
-      ],
-      vi: [
-        "Khi nằm sấp, bé nâng đầu khoảng 45 độ.",
-        "Khi nằm, bé cử động tay chân nhịp nhàng hơn.",
-      ],
-    },
-    fineMotor: {
-      ko: ["주먹을 쥐고 있는 시간이 조금씩 줄어요.", "눈앞의 움직이는 물체를 따라봐요."],
-      en: [
-        "Spends a little less time with hands fisted.",
-        "Follows a moving object with the eyes.",
-      ],
-      vi: [
-        "Bé nắm tay lại ít hơn một chút.",
-        "Mắt bé dõi theo vật chuyển động trước mặt.",
-      ],
-    },
+    grossMotor: [
+      {
+        "id": "2-g01",
+        "text": {
+          "ko": "엎드린 자세에서 고개를 45도 정도 들어요.",
+          "en": "Lifts the head about 45 degrees while on the tummy.",
+          "vi": "Khi nằm sấp, bé nâng đầu khoảng 45 độ."
+        }
+      },
+      {
+        "id": "2-g02",
+        "text": {
+          "ko": "누워서 팔다리를 더 부드럽게 움직여요.",
+          "en": "Moves arms and legs more smoothly when lying down.",
+          "vi": "Khi nằm, bé cử động tay chân nhịp nhàng hơn."
+        }
+      }
+    ],
+    fineMotor: [
+      {
+        "id": "2-f01",
+        "text": {
+          "ko": "주먹을 쥐고 있는 시간이 조금씩 줄어요.",
+          "en": "Spends a little less time with hands fisted.",
+          "vi": "Bé nắm tay lại ít hơn một chút."
+        }
+      },
+      {
+        "id": "2-f02",
+        "text": {
+          "ko": "눈앞의 움직이는 물체를 따라봐요.",
+          "en": "Follows a moving object with the eyes.",
+          "vi": "Mắt bé dõi theo vật chuyển động trước mặt."
+        }
+      }
+    ],
     reflexes: ["moro", "rooting", "grasp", "atnr"],
     parentTip: {
       ko: "아기 눈높이에서 천천히 얼굴을 움직이며 눈맞춤을 해주세요. 시각 추적과 목 근육 발달에 좋아요.",
@@ -272,40 +308,58 @@ export const stages: Stage[] = [
       en: "Good head control now. Brings hands together to the mouth and props the chest up on the arms. A first roll may appear.",
       vi: "Bé giữ đầu khá vững. Bé chụm hai tay đưa lên miệng và chống tay nâng ngực khi nằm sấp. Lần lật đầu tiên có thể xuất hiện.",
     },
-    grossMotor: {
-      ko: [
-        "엎드려서 팔꿈치로 상체를 받치고 고개를 90도까지 들어요.",
-        "받쳐 안으면 머리를 안정적으로 가눠요.",
-        "엎드림에서 바로 눕기로 뒤집기가 시작될 수 있어요.",
-      ],
-      en: [
-        "Props up on the forearms and lifts the head up to 90 degrees.",
-        "Holds the head steady when held upright.",
-        "May start rolling from tummy to back.",
-      ],
-      vi: [
-        "Chống cẳng tay nâng người và ngẩng đầu lên đến 90 độ.",
-        "Giữ đầu vững khi được bế thẳng.",
-        "Có thể bắt đầu lật từ nằm sấp sang nằm ngửa.",
-      ],
-    },
-    fineMotor: {
-      ko: [
-        "두 손을 가슴 앞에서 모아요.",
-        "눈앞의 장난감을 향해 손을 뻗기 시작해요.",
-        "쥐여주면 잠시 흔들며 가지고 놀아요.",
-      ],
-      en: [
-        "Brings both hands together in front of the chest.",
-        "Begins reaching toward a toy.",
-        "Holds and shakes a toy placed in the hand.",
-      ],
-      vi: [
-        "Chụm hai tay trước ngực.",
-        "Bắt đầu với tay về phía đồ chơi.",
-        "Cầm và lắc đồ chơi khi được đặt vào tay.",
-      ],
-    },
+    grossMotor: [
+      {
+        "id": "3-4-g01",
+        "text": {
+          "ko": "엎드려서 팔꿈치로 상체를 받치고 고개를 90도까지 들어요.",
+          "en": "Props up on the forearms and lifts the head up to 90 degrees.",
+          "vi": "Chống cẳng tay nâng người và ngẩng đầu lên đến 90 độ."
+        }
+      },
+      {
+        "id": "3-4-g02",
+        "text": {
+          "ko": "받쳐 안으면 머리를 안정적으로 가눠요.",
+          "en": "Holds the head steady when held upright.",
+          "vi": "Giữ đầu vững khi được bế thẳng."
+        }
+      },
+      {
+        "id": "3-4-g03",
+        "text": {
+          "ko": "엎드림에서 바로 눕기로 뒤집기가 시작될 수 있어요.",
+          "en": "May start rolling from tummy to back.",
+          "vi": "Có thể bắt đầu lật từ nằm sấp sang nằm ngửa."
+        }
+      }
+    ],
+    fineMotor: [
+      {
+        "id": "3-4-f01",
+        "text": {
+          "ko": "두 손을 가슴 앞에서 모아요.",
+          "en": "Brings both hands together in front of the chest.",
+          "vi": "Chụm hai tay trước ngực."
+        }
+      },
+      {
+        "id": "3-4-f02",
+        "text": {
+          "ko": "눈앞의 장난감을 향해 손을 뻗기 시작해요.",
+          "en": "Begins reaching toward a toy.",
+          "vi": "Bắt đầu với tay về phía đồ chơi."
+        }
+      },
+      {
+        "id": "3-4-f03",
+        "text": {
+          "ko": "쥐여주면 잠시 흔들며 가지고 놀아요.",
+          "en": "Holds and shakes a toy placed in the hand.",
+          "vi": "Cầm và lắc đồ chơi khi được đặt vào tay."
+        }
+      }
+    ],
     reflexes: ["grasp", "atnr"],
     parentTip: {
       ko: "딸랑이를 손이 닿을 듯한 거리에 두어 손 뻗기를 유도해 보세요. 눈과 손의 협응이 자라납니다.",
@@ -352,40 +406,58 @@ export const stages: Stage[] = [
       en: "Rolls both ways and sits with support. Grabs objects with the whole palm and explores them with the mouth.",
       vi: "Bé lật được cả hai chiều và ngồi khi có người đỡ. Bé nắm đồ vật bằng cả bàn tay và khám phá bằng miệng.",
     },
-    grossMotor: {
-      ko: [
-        "양방향(엎드림↔바로 눕기)으로 뒤집어요.",
-        "손으로 바닥을 짚고 잠깐 앉아 있거나, 받쳐주면 앉아요.",
-        "겨드랑이를 받쳐 세우면 다리로 체중을 디뎌요.",
-      ],
-      en: [
-        "Rolls both ways (tummy ↔ back).",
-        "Sits briefly propped on the hands, or sits with support.",
-        "Bears weight on the legs when held standing.",
-      ],
-      vi: [
-        "Lật được cả hai chiều (sấp ↔ ngửa).",
-        "Ngồi trong giây lát khi chống tay, hoặc ngồi khi được đỡ.",
-        "Dồn trọng lượng lên chân khi được giữ đứng.",
-      ],
-    },
-    fineMotor: {
-      ko: [
-        "물건을 손바닥 전체로 움켜쥐어요.",
-        "한 손에서 다른 손으로 물건을 옮기기 시작해요.",
-        "잡은 것은 무엇이든 입으로 가져가 탐색해요.",
-      ],
-      en: [
-        "Rakes objects up with the whole palm.",
-        "Begins passing objects from one hand to the other.",
-        "Brings everything to the mouth to explore.",
-      ],
-      vi: [
-        "Vơ lấy đồ vật bằng cả bàn tay.",
-        "Bắt đầu chuyền đồ vật từ tay này sang tay kia.",
-        "Đưa mọi thứ lên miệng để khám phá.",
-      ],
-    },
+    grossMotor: [
+      {
+        "id": "5-6-g01",
+        "text": {
+          "ko": "양방향(엎드림↔바로 눕기)으로 뒤집어요.",
+          "en": "Rolls both ways (tummy ↔ back).",
+          "vi": "Lật được cả hai chiều (sấp ↔ ngửa)."
+        }
+      },
+      {
+        "id": "5-6-g02",
+        "text": {
+          "ko": "손으로 바닥을 짚고 잠깐 앉아 있거나, 받쳐주면 앉아요.",
+          "en": "Sits briefly propped on the hands, or sits with support.",
+          "vi": "Ngồi trong giây lát khi chống tay, hoặc ngồi khi được đỡ."
+        }
+      },
+      {
+        "id": "5-6-g03",
+        "text": {
+          "ko": "겨드랑이를 받쳐 세우면 다리로 체중을 디뎌요.",
+          "en": "Bears weight on the legs when held standing.",
+          "vi": "Dồn trọng lượng lên chân khi được giữ đứng."
+        }
+      }
+    ],
+    fineMotor: [
+      {
+        "id": "5-6-f01",
+        "text": {
+          "ko": "물건을 손바닥 전체로 움켜쥐어요.",
+          "en": "Rakes objects up with the whole palm.",
+          "vi": "Vơ lấy đồ vật bằng cả bàn tay."
+        }
+      },
+      {
+        "id": "5-6-f02",
+        "text": {
+          "ko": "한 손에서 다른 손으로 물건을 옮기기 시작해요.",
+          "en": "Begins passing objects from one hand to the other.",
+          "vi": "Bắt đầu chuyền đồ vật từ tay này sang tay kia."
+        }
+      },
+      {
+        "id": "5-6-f03",
+        "text": {
+          "ko": "잡은 것은 무엇이든 입으로 가져가 탐색해요.",
+          "en": "Brings everything to the mouth to explore.",
+          "vi": "Đưa mọi thứ lên miệng để khám phá."
+        }
+      }
+    ],
     reflexes: [],
     parentTip: {
       ko: "안전한 바닥에서 자유롭게 구르고 뒤집게 해주세요. 다양한 질감의 장난감 탐색도 좋아요.",
@@ -438,37 +510,50 @@ export const stages: Stage[] = [
       en: "Can sit alone. Moves by scooting on the belly and starts trying to pull up to stand.",
       vi: "Bé tự ngồi được. Bé di chuyển bằng cách trườn bụng và bắt đầu cố bám để đứng dậy.",
     },
-    grossMotor: {
-      ko: [
-        "손을 짚지 않고 혼자 안정적으로 앉아요.",
-        "배밀이를 하거나 네발 기기 자세를 잡아요.",
-        "가구를 잡고 무릎을 펴 일어서려 해요.",
-      ],
-      en: [
-        "Sits steadily without using the hands.",
-        "Scoots on the belly or gets into a hands-and-knees position.",
-        "Tries to pull up to stand holding furniture.",
-      ],
-      vi: [
-        "Ngồi vững mà không cần chống tay.",
-        "Trườn bụng hoặc vào tư thế bò bằng tay và đầu gối.",
-        "Cố bám vào đồ đạc để đứng lên.",
-      ],
-    },
-    fineMotor: {
-      ko: [
-        "엄지와 다른 손가락으로 물건을 집기 시작해요(초기 집기).",
-        "양손에 물건을 하나씩 쥐고 부딪쳐요.",
-      ],
-      en: [
-        "Starts picking up objects with thumb and fingers (early grasp).",
-        "Holds an object in each hand and bangs them together.",
-      ],
-      vi: [
-        "Bắt đầu nhặt đồ vật bằng ngón cái và các ngón tay (cầm nắm sơ khởi).",
-        "Cầm mỗi tay một vật và đập chúng vào nhau.",
-      ],
-    },
+    grossMotor: [
+      {
+        "id": "7-8-g01",
+        "text": {
+          "ko": "손을 짚지 않고 혼자 안정적으로 앉아요.",
+          "en": "Sits steadily without using the hands.",
+          "vi": "Ngồi vững mà không cần chống tay."
+        }
+      },
+      {
+        "id": "7-8-g02",
+        "text": {
+          "ko": "배밀이를 하거나 네발 기기 자세를 잡아요.",
+          "en": "Scoots on the belly or gets into a hands-and-knees position.",
+          "vi": "Trườn bụng hoặc vào tư thế bò bằng tay và đầu gối."
+        }
+      },
+      {
+        "id": "7-8-g03",
+        "text": {
+          "ko": "가구를 잡고 무릎을 펴 일어서려 해요.",
+          "en": "Tries to pull up to stand holding furniture.",
+          "vi": "Cố bám vào đồ đạc để đứng lên."
+        }
+      }
+    ],
+    fineMotor: [
+      {
+        "id": "7-8-f01",
+        "text": {
+          "ko": "엄지와 다른 손가락으로 물건을 집기 시작해요(초기 집기).",
+          "en": "Starts picking up objects with thumb and fingers (early grasp).",
+          "vi": "Bắt đầu nhặt đồ vật bằng ngón cái và các ngón tay (cầm nắm sơ khởi)."
+        }
+      },
+      {
+        "id": "7-8-f02",
+        "text": {
+          "ko": "양손에 물건을 하나씩 쥐고 부딪쳐요.",
+          "en": "Holds an object in each hand and bangs them together.",
+          "vi": "Cầm mỗi tay một vật và đập chúng vào nhau."
+        }
+      }
+    ],
     reflexes: ["stnr"],
     parentTip: {
       ko: "아기 앞쪽에 장난감을 두어 기어가도록 유도해 보세요. 안전한 가구 모서리는 미리 보호해 주세요.",
@@ -521,37 +606,50 @@ export const stages: Stage[] = [
       en: "Crawls well and cruises sideways holding furniture. Picks up small things with precision.",
       vi: "Bé bò giỏi và đi men theo đồ đạc (bám đi ngang). Bé nhặt vật nhỏ một cách khéo léo.",
     },
-    grossMotor: {
-      ko: [
-        "네발로 능숙하게 기어 다녀요.",
-        "가구를 잡고 스스로 일어서요.",
-        "가구를 붙잡고 옆으로 발을 옮겨 걸어요(크루징).",
-      ],
-      en: [
-        "Crawls skillfully on hands and knees.",
-        "Pulls up to stand on furniture.",
-        "Cruises sideways stepping along furniture.",
-      ],
-      vi: [
-        "Bò thành thạo bằng tay và đầu gối.",
-        "Tự bám đồ đạc để đứng lên.",
-        "Bám đồ đạc bước ngang để đi (bám đi).",
-      ],
-    },
-    fineMotor: {
-      ko: [
-        "엄지와 검지로 작은 것을 정확히 집어요(집게 잡기).",
-        "물건을 일부러 떨어뜨리며 인과관계를 즐겨요.",
-      ],
-      en: [
-        "Uses a precise pincer grasp (thumb and index finger).",
-        "Drops objects on purpose, enjoying cause and effect.",
-      ],
-      vi: [
-        "Nhặt vật nhỏ chính xác bằng ngón cái và ngón trỏ (kẹp ngón).",
-        "Cố ý thả rơi đồ vật, thích thú với quan hệ nhân quả.",
-      ],
-    },
+    grossMotor: [
+      {
+        "id": "9-10-g01",
+        "text": {
+          "ko": "네발로 능숙하게 기어 다녀요.",
+          "en": "Crawls skillfully on hands and knees.",
+          "vi": "Bò thành thạo bằng tay và đầu gối."
+        }
+      },
+      {
+        "id": "9-10-g02",
+        "text": {
+          "ko": "가구를 잡고 스스로 일어서요.",
+          "en": "Pulls up to stand on furniture.",
+          "vi": "Tự bám đồ đạc để đứng lên."
+        }
+      },
+      {
+        "id": "9-10-g03",
+        "text": {
+          "ko": "가구를 붙잡고 옆으로 발을 옮겨 걸어요(크루징).",
+          "en": "Cruises sideways stepping along furniture.",
+          "vi": "Bám đồ đạc bước ngang để đi (bám đi)."
+        }
+      }
+    ],
+    fineMotor: [
+      {
+        "id": "9-10-f01",
+        "text": {
+          "ko": "엄지와 검지로 작은 것을 정확히 집어요(집게 잡기).",
+          "en": "Uses a precise pincer grasp (thumb and index finger).",
+          "vi": "Nhặt vật nhỏ chính xác bằng ngón cái và ngón trỏ (kẹp ngón)."
+        }
+      },
+      {
+        "id": "9-10-f02",
+        "text": {
+          "ko": "물건을 일부러 떨어뜨리며 인과관계를 즐겨요.",
+          "en": "Drops objects on purpose, enjoying cause and effect.",
+          "vi": "Cố ý thả rơi đồ vật, thích thú với quan hệ nhân quả."
+        }
+      }
+    ],
     reflexes: [],
     parentTip: {
       ko: "붙잡고 설 수 있는 안정적인 가구를 배치해 주세요. 바닥의 작은 물건은 삼킴 위험이 있으니 치워주세요.",
@@ -604,37 +702,50 @@ export const stages: Stage[] = [
       en: "Stands alone briefly and may take first steps. The timing of walking varies widely from baby to baby.",
       vi: "Bé tự đứng được trong giây lát và có thể bước những bước đầu tiên. Thời điểm biết đi khác nhau nhiều tùy mỗi bé.",
     },
-    grossMotor: {
-      ko: [
-        "아무것도 잡지 않고 혼자 잠깐 서 있어요.",
-        "손을 잡아주면 걷고, 첫 독립 보행을 시도해요.",
-        "앉았다 일어서기를 자유롭게 해요.",
-      ],
-      en: [
-        "Stands alone briefly without holding on.",
-        "Walks when a hand is held, and tries first independent steps.",
-        "Moves freely between sitting and standing.",
-      ],
-      vi: [
-        "Tự đứng trong giây lát mà không bám víu.",
-        "Đi khi được dắt tay, và thử những bước đi độc lập đầu tiên.",
-        "Tự do chuyển giữa ngồi và đứng.",
-      ],
-    },
-    fineMotor: {
-      ko: [
-        "컵을 잡고 마시려 하거나 숟가락을 쥐어요.",
-        "블록 2개를 쌓으려 시도하고, 책장을 넘겨요.",
-      ],
-      en: [
-        "Tries to drink from a cup and holds a spoon.",
-        "Tries to stack 2 blocks and turns book pages.",
-      ],
-      vi: [
-        "Cố cầm cốc uống nước và cầm thìa.",
-        "Cố xếp chồng 2 khối và lật trang sách.",
-      ],
-    },
+    grossMotor: [
+      {
+        "id": "11-12-g01",
+        "text": {
+          "ko": "아무것도 잡지 않고 혼자 잠깐 서 있어요.",
+          "en": "Stands alone briefly without holding on.",
+          "vi": "Tự đứng trong giây lát mà không bám víu."
+        }
+      },
+      {
+        "id": "11-12-g02",
+        "text": {
+          "ko": "손을 잡아주면 걷고, 첫 독립 보행을 시도해요.",
+          "en": "Walks when a hand is held, and tries first independent steps.",
+          "vi": "Đi khi được dắt tay, và thử những bước đi độc lập đầu tiên."
+        }
+      },
+      {
+        "id": "11-12-g03",
+        "text": {
+          "ko": "앉았다 일어서기를 자유롭게 해요.",
+          "en": "Moves freely between sitting and standing.",
+          "vi": "Tự do chuyển giữa ngồi và đứng."
+        }
+      }
+    ],
+    fineMotor: [
+      {
+        "id": "11-12-f01",
+        "text": {
+          "ko": "컵을 잡고 마시려 하거나 숟가락을 쥐어요.",
+          "en": "Tries to drink from a cup and holds a spoon.",
+          "vi": "Cố cầm cốc uống nước và cầm thìa."
+        }
+      },
+      {
+        "id": "11-12-f02",
+        "text": {
+          "ko": "블록 2개를 쌓으려 시도하고, 책장을 넘겨요.",
+          "en": "Tries to stack 2 blocks and turns book pages.",
+          "vi": "Cố xếp chồng 2 khối và lật trang sách."
+        }
+      }
+    ],
     reflexes: ["babinski"],
     parentTip: {
       ko: "맨발로 안전한 바닥을 걷게 하면 균형 감각에 도움이 돼요. 걷는 시기는 약 9~18개월까지 정상 범위가 넓어요.",
@@ -681,28 +792,50 @@ export const stages: Stage[] = [
       en: "Walking alone becomes steady. Crawls up stairs and enjoys push-and-pull toys.",
       vi: "Bé đi một mình vững vàng hơn. Bé bò lên cầu thang và thích đồ chơi kéo đẩy.",
     },
-    grossMotor: {
-      ko: [
-        "혼자 안정적으로 걷고, 멈췄다 다시 걸어요.",
-        "기어서 계단을 오르고, 쪼그려 앉았다 일어서요.",
-        "끌거나 미는 장난감을 가지고 걸어요.",
-      ],
-      en: [
-        "Walks steadily alone, stopping and starting.",
-        "Crawls up stairs and squats then stands back up.",
-        "Walks while pulling or pushing a toy.",
-      ],
-      vi: [
-        "Đi một mình vững vàng, dừng lại rồi đi tiếp.",
-        "Bò lên cầu thang và ngồi xổm rồi đứng dậy.",
-        "Vừa đi vừa kéo hoặc đẩy đồ chơi.",
-      ],
-    },
-    fineMotor: {
-      ko: ["블록을 2~4개 쌓아요.", "크레용으로 끄적이고, 숟가락으로 떠먹으려 해요."],
-      en: ["Stacks 2–4 blocks.", "Scribbles with a crayon and tries to self-feed with a spoon."],
-      vi: ["Xếp chồng 2–4 khối.", "Vẽ nguệch ngoạc bằng bút sáp và tự xúc ăn bằng thìa."],
-    },
+    grossMotor: [
+      {
+        "id": "13-18-g01",
+        "text": {
+          "ko": "혼자 안정적으로 걷고, 멈췄다 다시 걸어요.",
+          "en": "Walks steadily alone, stopping and starting.",
+          "vi": "Đi một mình vững vàng, dừng lại rồi đi tiếp."
+        }
+      },
+      {
+        "id": "13-18-g02",
+        "text": {
+          "ko": "기어서 계단을 오르고, 쪼그려 앉았다 일어서요.",
+          "en": "Crawls up stairs and squats then stands back up.",
+          "vi": "Bò lên cầu thang và ngồi xổm rồi đứng dậy."
+        }
+      },
+      {
+        "id": "13-18-g03",
+        "text": {
+          "ko": "끌거나 미는 장난감을 가지고 걸어요.",
+          "en": "Walks while pulling or pushing a toy.",
+          "vi": "Vừa đi vừa kéo hoặc đẩy đồ chơi."
+        }
+      }
+    ],
+    fineMotor: [
+      {
+        "id": "13-18-f01",
+        "text": {
+          "ko": "블록을 2~4개 쌓아요.",
+          "en": "Stacks 2–4 blocks.",
+          "vi": "Xếp chồng 2–4 khối."
+        }
+      },
+      {
+        "id": "13-18-f02",
+        "text": {
+          "ko": "크레용으로 끄적이고, 숟가락으로 떠먹으려 해요.",
+          "en": "Scribbles with a crayon and tries to self-feed with a spoon.",
+          "vi": "Vẽ nguệch ngoạc bằng bút sáp và tự xúc ăn bằng thìa."
+        }
+      }
+    ],
     reflexes: [],
     parentTip: {
       ko: "넘어져도 괜찮은 넓은 공간에서 많이 걷게 해주세요. 계단은 반드시 어른이 곁에서 지켜봐 주세요.",
@@ -743,28 +876,50 @@ export const stages: Stage[] = [
       en: "Starts running and kicks a ball. Goes up and down stairs with a hand held, and the world opens up.",
       vi: "Bé bắt đầu chạy và đá bóng. Bé lên xuống cầu thang khi được dắt tay, phạm vi hoạt động mở rộng hẳn.",
     },
-    grossMotor: {
-      ko: [
-        "달리기 시작하고, 잘 넘어지지 않아요.",
-        "공을 발로 차고, 제자리에서 살짝 뛰어요.",
-        "난간이나 손을 잡고 계단을 오르내려요.",
-      ],
-      en: [
-        "Starts running and falls less often.",
-        "Kicks a ball and jumps in place a little.",
-        "Goes up and down stairs holding a rail or hand.",
-      ],
-      vi: [
-        "Bắt đầu chạy và ít bị ngã hơn.",
-        "Đá bóng và nhảy tại chỗ một chút.",
-        "Lên xuống cầu thang khi vịn lan can hoặc nắm tay.",
-      ],
-    },
-    fineMotor: {
-      ko: ["블록을 6개 이상 쌓아요.", "수직선·원 같은 단순한 선을 따라 그어요."],
-      en: ["Stacks 6 or more blocks.", "Copies simple lines like a vertical stroke or circle."],
-      vi: ["Xếp chồng từ 6 khối trở lên.", "Vẽ theo các nét đơn giản như nét dọc hoặc hình tròn."],
-    },
+    grossMotor: [
+      {
+        "id": "19-24-g01",
+        "text": {
+          "ko": "달리기 시작하고, 잘 넘어지지 않아요.",
+          "en": "Starts running and falls less often.",
+          "vi": "Bắt đầu chạy và ít bị ngã hơn."
+        }
+      },
+      {
+        "id": "19-24-g02",
+        "text": {
+          "ko": "공을 발로 차고, 제자리에서 살짝 뛰어요.",
+          "en": "Kicks a ball and jumps in place a little.",
+          "vi": "Đá bóng và nhảy tại chỗ một chút."
+        }
+      },
+      {
+        "id": "19-24-g03",
+        "text": {
+          "ko": "난간이나 손을 잡고 계단을 오르내려요.",
+          "en": "Goes up and down stairs holding a rail or hand.",
+          "vi": "Lên xuống cầu thang khi vịn lan can hoặc nắm tay."
+        }
+      }
+    ],
+    fineMotor: [
+      {
+        "id": "19-24-f01",
+        "text": {
+          "ko": "블록을 6개 이상 쌓아요.",
+          "en": "Stacks 6 or more blocks.",
+          "vi": "Xếp chồng từ 6 khối trở lên."
+        }
+      },
+      {
+        "id": "19-24-f02",
+        "text": {
+          "ko": "수직선·원 같은 단순한 선을 따라 그어요.",
+          "en": "Copies simple lines like a vertical stroke or circle.",
+          "vi": "Vẽ theo các nét đơn giản như nét dọc hoặc hình tròn."
+        }
+      }
+    ],
     reflexes: [],
     parentTip: {
       ko: "공놀이, 미끄럼틀 등 대근육을 쓰는 바깥 놀이를 늘려주세요. 균형과 협응이 함께 자라납니다.",

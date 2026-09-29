@@ -2,38 +2,28 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { stages, stageThemes, reflexById, pick } from "@/lib/data";
+import { stages, stageThemes, reflexById, pick, type Milestone } from "@/lib/data";
 import { useApp } from "./Providers";
 import { ui, t } from "@/lib/i18n";
-import { computeAge, formatDateInputValue, loadSavedBirth } from "@/lib/age";
+import { computeAge, formatDateInputValue } from "@/lib/age";
 
-const STORAGE_KEY = "dev-checklist";
-
-// 값: 예전 데이터는 boolean, 새 데이터는 체크한 날짜(YYYY-MM-DD)
-type Checked = Record<string, boolean | string>;
+import { CHECKLIST_KEY, parseChecklist, serializeChecklist, type Checked } from "@/lib/checklist";
 
 export default function StageExplorer() {
-  const { lang } = useApp();
+  const { lang, birthInfo, today } = useApp();
   const [activeId, setActiveId] = useState(stages[0].id);
   const [checked, setChecked] = useState<Checked>({});
   const [loaded, setLoaded] = useState(false);
-  const [autoMonths, setAutoMonths] = useState<number | null>(null);
+  const age = computeAge(birthInfo.birth, birthInfo.corrected, birthInfo.dueDate);
+  const autoMonths = age?.status === "ok" ? age.months : null;
+  const automaticStage = age?.status === "ok" ? age.stageId : null;
 
   // 체크리스트 복원 + 저장된 생일이 있으면 현재 시기를 자동 선택
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage는 클라이언트에서만 읽을 수 있어 마운트 후 복원이 필요
-      if (saved) setChecked(JSON.parse(saved));
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Restore validated browser storage after mount.
+      setChecked(parseChecklist(localStorage.getItem(CHECKLIST_KEY)));
     } catch {}
-    const birth = loadSavedBirth();
-    if (birth) {
-      const age = computeAge(birth.birth, birth.corrected, birth.dueDate);
-      if (age?.status === "ok" && age.stageId) {
-        setActiveId(age.stageId);
-        setAutoMonths(age.months);
-      }
-    }
     setLoaded(true);
   }, []);
 
@@ -41,9 +31,14 @@ export default function StageExplorer() {
   useEffect(() => {
     if (!loaded) return;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(checked));
+      localStorage.setItem(CHECKLIST_KEY, serializeChecklist(checked));
     } catch {}
   }, [checked, loaded]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Synchronize selection with the shared age calculator.
+    if (automaticStage) setActiveId(automaticStage);
+  }, [automaticStage, today]);
 
   // 나이 계산기 등에서 보낸 시기 선택 이벤트 수신
   useEffect(() => {
@@ -58,11 +53,11 @@ export default function StageExplorer() {
   const active = stages.find((s) => s.id === activeId)!;
   const theme = stageThemes[active.theme];
 
-  const gross = pick(active.grossMotor, lang);
-  const fine = pick(active.fineMotor, lang);
+  const gross = active.grossMotor;
+  const fine = active.fineMotor;
   const allKeys = [
-    ...gross.map((_, i) => `${active.id}:g:${i}`),
-    ...fine.map((_, i) => `${active.id}:f:${i}`),
+    ...gross.map((item) => item.id),
+    ...fine.map((item) => item.id),
   ];
   const doneCount = allKeys.filter((k) => checked[k]).length;
   const progress = allKeys.length
@@ -83,11 +78,11 @@ export default function StageExplorer() {
     const lines: string[] = [`${t(ui.meta.title, lang)} — ${formatDateInputValue(new Date())}`];
     let total = 0;
     for (const s of stages) {
-      const g = pick(s.grossMotor, lang);
-      const f = pick(s.fineMotor, lang);
+      const g = s.grossMotor;
+      const f = s.fineMotor;
       const items = [
-        ...g.map((text, i) => ({ text, key: `${s.id}:g:${i}` })),
-        ...f.map((text, i) => ({ text, key: `${s.id}:f:${i}` })),
+        ...g.map((item) => ({ text: pick(item.text, lang), key: item.id })),
+        ...f.map((item) => ({ text: pick(item.text, lang), key: item.id })),
       ].filter((it) => checked[it.key]);
       if (!items.length) continue;
       lines.push("", `■ ${pick(s.ageRange, lang)}`);
@@ -250,7 +245,7 @@ export default function StageExplorer() {
             subtitle={t(ui.stages.grossSub, lang)}
             icon="💪"
             items={gross}
-            keyPrefix={`${active.id}:g`}
+            lang={lang}
             checked={checked}
             toggle={toggle}
             dotClass={theme.dot}
@@ -260,7 +255,7 @@ export default function StageExplorer() {
             subtitle={t(ui.stages.fineSub, lang)}
             icon="🖐️"
             items={fine}
-            keyPrefix={`${active.id}:f`}
+            lang={lang}
             checked={checked}
             toggle={toggle}
             dotClass={theme.dot}
@@ -363,7 +358,7 @@ function CheckBlock({
   subtitle,
   icon,
   items,
-  keyPrefix,
+  lang,
   checked,
   toggle,
   dotClass,
@@ -371,8 +366,8 @@ function CheckBlock({
   title: string;
   subtitle: string;
   icon: string;
-  items: string[];
-  keyPrefix: string;
+  items: Milestone[];
+  lang: "ko" | "en" | "vi";
   checked: Checked;
   toggle: (key: string) => void;
   dotClass: string;
@@ -387,13 +382,13 @@ function CheckBlock({
         </div>
       </div>
       <ul className="mt-4 space-y-1">
-        {items.map((item, i) => {
-          const key = `${keyPrefix}:${i}`;
+        {items.map((item) => {
+          const key = item.id;
           const value = checked[key];
           const isOn = !!value;
           const date = typeof value === "string" ? value : null;
           return (
-            <li key={i}>
+            <li key={key}>
               <button
                 onClick={() => toggle(key)}
                 role="checkbox"
@@ -416,7 +411,7 @@ function CheckBlock({
                       : "text-gray-700 dark:text-gray-200"
                   }`}
                 >
-                  {item}
+                  {pick(item.text, lang)}
                 </span>
                 {date && (
                   <span className="ml-auto shrink-0 self-center rounded-full bg-gray-100 px-2 py-0.5 text-[11px] tabular-nums text-gray-500 dark:bg-white/10 dark:text-gray-400">

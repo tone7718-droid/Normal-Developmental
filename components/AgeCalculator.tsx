@@ -1,51 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { useApp } from "./Providers";
 import { ui, t } from "@/lib/i18n";
 import { stages, pick } from "@/lib/data";
-import {
-  computeAge,
-  formatDateInputValue,
-  loadSavedBirth,
-  saveBirth,
-} from "@/lib/age";
+import { computeAge } from "@/lib/age";
 
 export default function AgeCalculator() {
-  const { lang } = useApp();
-  const [birth, setBirth] = useState("");
-  const [corrected, setCorrected] = useState(false);
-  const [dueDate, setDueDate] = useState("");
-  const [restored, setRestored] = useState(false);
-  // max는 클라이언트에서만 계산 — 서버와 브라우저의 날짜가 다른 경우의 하이드레이션 불일치 방지
-  const maxDate = useSyncExternalStore(
-    () => () => {},
-    () => formatDateInputValue(new Date()),
-    () => undefined,
-  );
-
-  // 저장해 둔 생일 복원 — 방문할 때마다 다시 입력하지 않아도 된다
-  useEffect(() => {
-    const saved = loadSavedBirth();
-    if (saved) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage는 클라이언트에서만 읽을 수 있어 마운트 후 복원이 필요
-      setBirth(saved.birth);
-      setCorrected(saved.corrected);
-      setDueDate(saved.dueDate);
-    }
-    setRestored(true);
-  }, []);
-
-  // 입력이 바뀌면 저장 (복원이 끝난 뒤부터)
-  useEffect(() => {
-    if (!restored) return;
-    saveBirth({ birth, corrected, dueDate });
-  }, [birth, corrected, dueDate, restored]);
-
-  const result = useMemo(
-    () => computeAge(birth, corrected, dueDate),
-    [birth, dueDate, corrected],
-  );
+  const { lang, birthInfo, updateBirth, today } = useApp();
+  const { birth, corrected, dueDate } = birthInfo;
+  const maxDate = today || undefined;
+  const result = computeAge(birth, corrected, dueDate);
 
   const goToStage = (id: string) => {
     window.dispatchEvent(new CustomEvent("selectstage", { detail: id }));
@@ -74,7 +38,7 @@ export default function AgeCalculator() {
                 type="date"
                 value={birth}
                 max={maxDate}
-                onChange={(e) => setBirth(e.target.value)}
+                onChange={(e) => updateBirth({ ...birthInfo, birth: e.target.value })}
                 className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-800 outline-none ring-rose-200 transition focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
               />
             </div>
@@ -83,7 +47,7 @@ export default function AgeCalculator() {
               <input
                 type="checkbox"
                 checked={corrected}
-                onChange={(e) => setCorrected(e.target.checked)}
+                onChange={(e) => updateBirth({ ...birthInfo, corrected: e.target.checked })}
                 className="h-4 w-4 rounded accent-rose-500"
               />
               {t(ui.calculator.correctedToggle, lang)}
@@ -98,7 +62,7 @@ export default function AgeCalculator() {
                   id="baby-due-date"
                   type="date"
                   value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
+                  onChange={(e) => updateBirth({ ...birthInfo, dueDate: e.target.value })}
                   className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-800 outline-none ring-rose-200 transition focus:ring-2 dark:border-white/10 dark:bg-white/5 dark:text-gray-100"
                 />
               </div>

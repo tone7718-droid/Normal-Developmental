@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
+import { loadSavedBirth, saveBirth, formatDateInputValue, type SavedBirth } from "@/lib/age";
 import type { Lang } from "@/lib/data";
 
 type Theme = "light" | "dark";
@@ -19,6 +20,9 @@ interface AppContextValue {
   theme: Theme;
   toggleTheme: () => void;
   mounted: boolean;
+  birthInfo: SavedBirth;
+  updateBirth: (value: SavedBirth) => void;
+  today: string;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -38,9 +42,38 @@ export function Providers({
   const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
 
+  const [birthInfo, setBirthInfo] = useState<SavedBirth>({ birth: "", corrected: false, dueDate: "" });
+  const [today, setToday] = useState("");
+  const updateBirth = (value: SavedBirth) => {
+    setBirthInfo(value);
+    saveBirth(value);
+  };
+  useEffect(() => {
+    const refresh = () => setToday(formatDateInputValue(new Date()));
+    const restore = () => {
+      setBirthInfo(loadSavedBirth() ?? { birth: "", corrected: false, dueDate: "" });
+      refresh();
+    };
+    restore();
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === "baby-birth" || event.key === null) restore();
+    };
+    const timer = window.setInterval(refresh, 60_000);
+    window.addEventListener("focus", refresh);
+    window.addEventListener("storage", onStorage);
+    document.addEventListener("visibilitychange", refresh);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener("focus", refresh);
+      window.removeEventListener("storage", onStorage);
+      document.removeEventListener("visibilitychange", refresh);
+    };
+  }, []);
+
   // 테마 초기값을 localStorage / 시스템 설정에서 복원
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
+    let savedTheme: string | null = null;
+    try { savedTheme = localStorage.getItem("theme"); } catch {}
     const prefersDark =
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -61,7 +94,7 @@ export function Providers({
     if (!mounted) return;
     const root = document.documentElement;
     root.classList.toggle("dark", theme === "dark");
-    localStorage.setItem("theme", theme);
+    try { localStorage.setItem("theme", theme); } catch {}
   }, [theme, mounted]);
 
   // 언어 전환 = 해당 로케일 경로로 이동 (현재 섹션 해시 유지)
@@ -76,7 +109,7 @@ export function Providers({
 
   return (
     <AppContext.Provider
-      value={{ lang, setLang, toggleLang, theme, toggleTheme, mounted }}
+      value={{ lang, setLang, toggleLang, theme, toggleTheme, mounted, birthInfo, updateBirth, today }}
     >
       {children}
     </AppContext.Provider>
